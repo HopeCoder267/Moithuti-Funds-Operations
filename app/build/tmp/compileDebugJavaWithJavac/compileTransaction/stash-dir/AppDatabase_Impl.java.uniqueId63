@@ -66,11 +66,17 @@ public final class AppDatabase_Impl extends AppDatabase {
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(3) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(4) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `clients` (`uuid` TEXT NOT NULL, `name` TEXT, `phone` TEXT, `notes` TEXT, `status` TEXT, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`))");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_clients_uuid` ON `clients` (`uuid`)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `loans` (`uuid` TEXT NOT NULL, `clientId` TEXT, `amount` REAL NOT NULL, `dateIssued` INTEGER NOT NULL, `dueDate` INTEGER NOT NULL, `status` TEXT, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`clientId`) REFERENCES `clients`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_loans_uuid` ON `loans` (`uuid`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_loans_clientId` ON `loans` (`clientId`)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `payments` (`uuid` TEXT NOT NULL, `loanId` TEXT, `amount` REAL NOT NULL, `date` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`loanId`) REFERENCES `loans`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_payments_uuid` ON `payments` (`uuid`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_payments_loanId` ON `payments` (`loanId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `investors` (`uuid` TEXT NOT NULL, `name` TEXT, `isMainAccount` INTEGER NOT NULL, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`))");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_investors_uuid` ON `investors` (`uuid`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `investor_transactions` (`uuid` TEXT NOT NULL, `investorId` TEXT, `type` TEXT, `amount` REAL NOT NULL, `relatedLoanId` TEXT, `timestamp` INTEGER NOT NULL, `yearMonth` TEXT, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`investorId`) REFERENCES `investors`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
@@ -78,22 +84,16 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_investor_transactions_investorId` ON `investor_transactions` (`investorId`)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_investor_transactions_relatedLoanId` ON `investor_transactions` (`relatedLoanId`)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_investor_transactions_yearMonth` ON `investor_transactions` (`yearMonth`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `loans` (`uuid` TEXT NOT NULL, `clientId` TEXT, `amount` REAL NOT NULL, `dateIssued` INTEGER NOT NULL, `dueDate` INTEGER NOT NULL, `status` TEXT, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`clientId`) REFERENCES `clients`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
-        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_loans_uuid` ON `loans` (`uuid`)");
-        db.execSQL("CREATE INDEX IF NOT EXISTS `index_loans_clientId` ON `loans` (`clientId`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `loan_funding` (`uuid` TEXT NOT NULL, `loanId` TEXT, `investorId` TEXT, `amount` REAL NOT NULL, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`loanId`) REFERENCES `loans`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`investorId`) REFERENCES `investors`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
-        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_loan_funding_uuid` ON `loan_funding` (`uuid`)");
-        db.execSQL("CREATE INDEX IF NOT EXISTS `index_loan_funding_loanId` ON `loan_funding` (`loanId`)");
-        db.execSQL("CREATE INDEX IF NOT EXISTS `index_loan_funding_investorId` ON `loan_funding` (`investorId`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `payments` (`uuid` TEXT NOT NULL, `loanId` TEXT, `amount` REAL NOT NULL, `date` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`loanId`) REFERENCES `loans`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
-        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_payments_uuid` ON `payments` (`uuid`)");
-        db.execSQL("CREATE INDEX IF NOT EXISTS `index_payments_loanId` ON `payments` (`loanId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `buffers` (`uuid` TEXT NOT NULL, `investorId` TEXT, `amount` REAL NOT NULL, `reason` TEXT, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`investorId`) REFERENCES `investors`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_buffers_uuid` ON `buffers` (`uuid`)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_buffers_investorId` ON `buffers` (`investorId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `monthly_balances` (`uuid` TEXT NOT NULL, `investorId` TEXT, `yearMonth` TEXT, `balance` REAL NOT NULL, `monthlyTopUp` REAL NOT NULL, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`investorId`) REFERENCES `investors`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_monthly_balances_uuid` ON `monthly_balances` (`uuid`)");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_monthly_balances_investorId_yearMonth` ON `monthly_balances` (`investorId`, `yearMonth`)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `loan_funding` (`uuid` TEXT NOT NULL, `loanId` TEXT, `investorId` TEXT, `amount` REAL NOT NULL, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`loanId`) REFERENCES `loans`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`investorId`) REFERENCES `investors`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_loan_funding_uuid` ON `loan_funding` (`uuid`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_loan_funding_loanId` ON `loan_funding` (`loanId`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_loan_funding_investorId` ON `loan_funding` (`investorId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `profit_tracker` (`uuid` TEXT NOT NULL, `investorId` TEXT, `yearMonth` TEXT, `monthlyProfit` REAL NOT NULL, `cumulativeProfit` REAL NOT NULL, `monthlyInterest` REAL NOT NULL, `cumulativeInterest` REAL NOT NULL, `monthlyLoansIssued` REAL NOT NULL, `monthlyRepaymentsReceived` REAL NOT NULL, `availableFunds` REAL NOT NULL, `createdDate` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `syncStatus` TEXT, `deleted` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`investorId`) REFERENCES `investors`(`uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_profit_tracker_uuid` ON `profit_tracker` (`uuid`)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_profit_tracker_investorId` ON `profit_tracker` (`investorId`)");
@@ -106,13 +106,13 @@ public final class AppDatabase_Impl extends AppDatabase {
       @Override
       public void dropAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS `clients`");
+        db.execSQL("DROP TABLE IF EXISTS `loans`");
+        db.execSQL("DROP TABLE IF EXISTS `payments`");
         db.execSQL("DROP TABLE IF EXISTS `investors`");
         db.execSQL("DROP TABLE IF EXISTS `investor_transactions`");
-        db.execSQL("DROP TABLE IF EXISTS `loans`");
-        db.execSQL("DROP TABLE IF EXISTS `loan_funding`");
-        db.execSQL("DROP TABLE IF EXISTS `payments`");
         db.execSQL("DROP TABLE IF EXISTS `buffers`");
         db.execSQL("DROP TABLE IF EXISTS `monthly_balances`");
+        db.execSQL("DROP TABLE IF EXISTS `loan_funding`");
         db.execSQL("DROP TABLE IF EXISTS `profit_tracker`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
@@ -178,6 +178,48 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoClients + "\n"
                   + " Found:\n" + _existingClients);
         }
+        final HashMap<String, TableInfo.Column> _columnsLoans = new HashMap<String, TableInfo.Column>(9);
+        _columnsLoans.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("clientId", new TableInfo.Column("clientId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("dateIssued", new TableInfo.Column("dateIssued", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("dueDate", new TableInfo.Column("dueDate", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("status", new TableInfo.Column("status", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("lastModified", new TableInfo.Column("lastModified", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("syncStatus", new TableInfo.Column("syncStatus", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoans.put("deleted", new TableInfo.Column("deleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysLoans = new HashSet<TableInfo.ForeignKey>(1);
+        _foreignKeysLoans.add(new TableInfo.ForeignKey("clients", "CASCADE", "NO ACTION", Arrays.asList("clientId"), Arrays.asList("uuid")));
+        final HashSet<TableInfo.Index> _indicesLoans = new HashSet<TableInfo.Index>(2);
+        _indicesLoans.add(new TableInfo.Index("index_loans_uuid", true, Arrays.asList("uuid"), Arrays.asList("ASC")));
+        _indicesLoans.add(new TableInfo.Index("index_loans_clientId", false, Arrays.asList("clientId"), Arrays.asList("ASC")));
+        final TableInfo _infoLoans = new TableInfo("loans", _columnsLoans, _foreignKeysLoans, _indicesLoans);
+        final TableInfo _existingLoans = TableInfo.read(db, "loans");
+        if (!_infoLoans.equals(_existingLoans)) {
+          return new RoomOpenHelper.ValidationResult(false, "loans(com.moithuti.funds.data.local.entity.LoanEntity).\n"
+                  + " Expected:\n" + _infoLoans + "\n"
+                  + " Found:\n" + _existingLoans);
+        }
+        final HashMap<String, TableInfo.Column> _columnsPayments = new HashMap<String, TableInfo.Column>(7);
+        _columnsPayments.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPayments.put("loanId", new TableInfo.Column("loanId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPayments.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPayments.put("date", new TableInfo.Column("date", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPayments.put("lastModified", new TableInfo.Column("lastModified", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPayments.put("syncStatus", new TableInfo.Column("syncStatus", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPayments.put("deleted", new TableInfo.Column("deleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysPayments = new HashSet<TableInfo.ForeignKey>(1);
+        _foreignKeysPayments.add(new TableInfo.ForeignKey("loans", "CASCADE", "NO ACTION", Arrays.asList("loanId"), Arrays.asList("uuid")));
+        final HashSet<TableInfo.Index> _indicesPayments = new HashSet<TableInfo.Index>(2);
+        _indicesPayments.add(new TableInfo.Index("index_payments_uuid", true, Arrays.asList("uuid"), Arrays.asList("ASC")));
+        _indicesPayments.add(new TableInfo.Index("index_payments_loanId", false, Arrays.asList("loanId"), Arrays.asList("ASC")));
+        final TableInfo _infoPayments = new TableInfo("payments", _columnsPayments, _foreignKeysPayments, _indicesPayments);
+        final TableInfo _existingPayments = TableInfo.read(db, "payments");
+        if (!_infoPayments.equals(_existingPayments)) {
+          return new RoomOpenHelper.ValidationResult(false, "payments(com.moithuti.funds.data.local.entity.PaymentEntity).\n"
+                  + " Expected:\n" + _infoPayments + "\n"
+                  + " Found:\n" + _existingPayments);
+        }
         final HashMap<String, TableInfo.Column> _columnsInvestors = new HashMap<String, TableInfo.Column>(7);
         _columnsInvestors.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsInvestors.put("name", new TableInfo.Column("name", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -220,71 +262,6 @@ public final class AppDatabase_Impl extends AppDatabase {
           return new RoomOpenHelper.ValidationResult(false, "investor_transactions(com.moithuti.funds.data.local.entity.InvestorTransactionEntity).\n"
                   + " Expected:\n" + _infoInvestorTransactions + "\n"
                   + " Found:\n" + _existingInvestorTransactions);
-        }
-        final HashMap<String, TableInfo.Column> _columnsLoans = new HashMap<String, TableInfo.Column>(9);
-        _columnsLoans.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("clientId", new TableInfo.Column("clientId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("dateIssued", new TableInfo.Column("dateIssued", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("dueDate", new TableInfo.Column("dueDate", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("status", new TableInfo.Column("status", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("lastModified", new TableInfo.Column("lastModified", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("syncStatus", new TableInfo.Column("syncStatus", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoans.put("deleted", new TableInfo.Column("deleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        final HashSet<TableInfo.ForeignKey> _foreignKeysLoans = new HashSet<TableInfo.ForeignKey>(1);
-        _foreignKeysLoans.add(new TableInfo.ForeignKey("clients", "CASCADE", "NO ACTION", Arrays.asList("clientId"), Arrays.asList("uuid")));
-        final HashSet<TableInfo.Index> _indicesLoans = new HashSet<TableInfo.Index>(2);
-        _indicesLoans.add(new TableInfo.Index("index_loans_uuid", true, Arrays.asList("uuid"), Arrays.asList("ASC")));
-        _indicesLoans.add(new TableInfo.Index("index_loans_clientId", false, Arrays.asList("clientId"), Arrays.asList("ASC")));
-        final TableInfo _infoLoans = new TableInfo("loans", _columnsLoans, _foreignKeysLoans, _indicesLoans);
-        final TableInfo _existingLoans = TableInfo.read(db, "loans");
-        if (!_infoLoans.equals(_existingLoans)) {
-          return new RoomOpenHelper.ValidationResult(false, "loans(com.moithuti.funds.data.local.entity.LoanEntity).\n"
-                  + " Expected:\n" + _infoLoans + "\n"
-                  + " Found:\n" + _existingLoans);
-        }
-        final HashMap<String, TableInfo.Column> _columnsLoanFunding = new HashMap<String, TableInfo.Column>(8);
-        _columnsLoanFunding.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("loanId", new TableInfo.Column("loanId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("investorId", new TableInfo.Column("investorId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("createdDate", new TableInfo.Column("createdDate", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("lastModified", new TableInfo.Column("lastModified", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("syncStatus", new TableInfo.Column("syncStatus", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsLoanFunding.put("deleted", new TableInfo.Column("deleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        final HashSet<TableInfo.ForeignKey> _foreignKeysLoanFunding = new HashSet<TableInfo.ForeignKey>(2);
-        _foreignKeysLoanFunding.add(new TableInfo.ForeignKey("loans", "CASCADE", "NO ACTION", Arrays.asList("loanId"), Arrays.asList("uuid")));
-        _foreignKeysLoanFunding.add(new TableInfo.ForeignKey("investors", "CASCADE", "NO ACTION", Arrays.asList("investorId"), Arrays.asList("uuid")));
-        final HashSet<TableInfo.Index> _indicesLoanFunding = new HashSet<TableInfo.Index>(3);
-        _indicesLoanFunding.add(new TableInfo.Index("index_loan_funding_uuid", true, Arrays.asList("uuid"), Arrays.asList("ASC")));
-        _indicesLoanFunding.add(new TableInfo.Index("index_loan_funding_loanId", false, Arrays.asList("loanId"), Arrays.asList("ASC")));
-        _indicesLoanFunding.add(new TableInfo.Index("index_loan_funding_investorId", false, Arrays.asList("investorId"), Arrays.asList("ASC")));
-        final TableInfo _infoLoanFunding = new TableInfo("loan_funding", _columnsLoanFunding, _foreignKeysLoanFunding, _indicesLoanFunding);
-        final TableInfo _existingLoanFunding = TableInfo.read(db, "loan_funding");
-        if (!_infoLoanFunding.equals(_existingLoanFunding)) {
-          return new RoomOpenHelper.ValidationResult(false, "loan_funding(com.moithuti.funds.data.local.entity.LoanFundingEntity).\n"
-                  + " Expected:\n" + _infoLoanFunding + "\n"
-                  + " Found:\n" + _existingLoanFunding);
-        }
-        final HashMap<String, TableInfo.Column> _columnsPayments = new HashMap<String, TableInfo.Column>(7);
-        _columnsPayments.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPayments.put("loanId", new TableInfo.Column("loanId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPayments.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPayments.put("date", new TableInfo.Column("date", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPayments.put("lastModified", new TableInfo.Column("lastModified", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPayments.put("syncStatus", new TableInfo.Column("syncStatus", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPayments.put("deleted", new TableInfo.Column("deleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        final HashSet<TableInfo.ForeignKey> _foreignKeysPayments = new HashSet<TableInfo.ForeignKey>(1);
-        _foreignKeysPayments.add(new TableInfo.ForeignKey("loans", "CASCADE", "NO ACTION", Arrays.asList("loanId"), Arrays.asList("uuid")));
-        final HashSet<TableInfo.Index> _indicesPayments = new HashSet<TableInfo.Index>(2);
-        _indicesPayments.add(new TableInfo.Index("index_payments_uuid", true, Arrays.asList("uuid"), Arrays.asList("ASC")));
-        _indicesPayments.add(new TableInfo.Index("index_payments_loanId", false, Arrays.asList("loanId"), Arrays.asList("ASC")));
-        final TableInfo _infoPayments = new TableInfo("payments", _columnsPayments, _foreignKeysPayments, _indicesPayments);
-        final TableInfo _existingPayments = TableInfo.read(db, "payments");
-        if (!_infoPayments.equals(_existingPayments)) {
-          return new RoomOpenHelper.ValidationResult(false, "payments(com.moithuti.funds.data.local.entity.PaymentEntity).\n"
-                  + " Expected:\n" + _infoPayments + "\n"
-                  + " Found:\n" + _existingPayments);
         }
         final HashMap<String, TableInfo.Column> _columnsBuffers = new HashMap<String, TableInfo.Column>(8);
         _columnsBuffers.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
@@ -329,6 +306,29 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoMonthlyBalances + "\n"
                   + " Found:\n" + _existingMonthlyBalances);
         }
+        final HashMap<String, TableInfo.Column> _columnsLoanFunding = new HashMap<String, TableInfo.Column>(8);
+        _columnsLoanFunding.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("loanId", new TableInfo.Column("loanId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("investorId", new TableInfo.Column("investorId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("amount", new TableInfo.Column("amount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("createdDate", new TableInfo.Column("createdDate", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("lastModified", new TableInfo.Column("lastModified", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("syncStatus", new TableInfo.Column("syncStatus", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsLoanFunding.put("deleted", new TableInfo.Column("deleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysLoanFunding = new HashSet<TableInfo.ForeignKey>(2);
+        _foreignKeysLoanFunding.add(new TableInfo.ForeignKey("loans", "CASCADE", "NO ACTION", Arrays.asList("loanId"), Arrays.asList("uuid")));
+        _foreignKeysLoanFunding.add(new TableInfo.ForeignKey("investors", "CASCADE", "NO ACTION", Arrays.asList("investorId"), Arrays.asList("uuid")));
+        final HashSet<TableInfo.Index> _indicesLoanFunding = new HashSet<TableInfo.Index>(3);
+        _indicesLoanFunding.add(new TableInfo.Index("index_loan_funding_uuid", true, Arrays.asList("uuid"), Arrays.asList("ASC")));
+        _indicesLoanFunding.add(new TableInfo.Index("index_loan_funding_loanId", false, Arrays.asList("loanId"), Arrays.asList("ASC")));
+        _indicesLoanFunding.add(new TableInfo.Index("index_loan_funding_investorId", false, Arrays.asList("investorId"), Arrays.asList("ASC")));
+        final TableInfo _infoLoanFunding = new TableInfo("loan_funding", _columnsLoanFunding, _foreignKeysLoanFunding, _indicesLoanFunding);
+        final TableInfo _existingLoanFunding = TableInfo.read(db, "loan_funding");
+        if (!_infoLoanFunding.equals(_existingLoanFunding)) {
+          return new RoomOpenHelper.ValidationResult(false, "loan_funding(com.moithuti.funds.data.local.entity.LoanFundingEntity).\n"
+                  + " Expected:\n" + _infoLoanFunding + "\n"
+                  + " Found:\n" + _existingLoanFunding);
+        }
         final HashMap<String, TableInfo.Column> _columnsProfitTracker = new HashMap<String, TableInfo.Column>(14);
         _columnsProfitTracker.put("uuid", new TableInfo.Column("uuid", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsProfitTracker.put("investorId", new TableInfo.Column("investorId", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -360,7 +360,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "20f452af23d591d9be4125a2bd024a4e", "d49eae12bf2bbbbb8bdbb1e4ea8eae3f");
+    }, "20f452af23d591d9be4125a2bd024a4e", "2677073a87619f6c47526ec27865afd7");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -371,7 +371,7 @@ public final class AppDatabase_Impl extends AppDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "clients","investors","investor_transactions","loans","loan_funding","payments","buffers","monthly_balances","profit_tracker");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "clients","loans","payments","investors","investor_transactions","buffers","monthly_balances","loan_funding","profit_tracker");
   }
 
   @Override
@@ -388,13 +388,13 @@ public final class AppDatabase_Impl extends AppDatabase {
         _db.execSQL("PRAGMA defer_foreign_keys = TRUE");
       }
       _db.execSQL("DELETE FROM `clients`");
+      _db.execSQL("DELETE FROM `loans`");
+      _db.execSQL("DELETE FROM `payments`");
       _db.execSQL("DELETE FROM `investors`");
       _db.execSQL("DELETE FROM `investor_transactions`");
-      _db.execSQL("DELETE FROM `loans`");
-      _db.execSQL("DELETE FROM `loan_funding`");
-      _db.execSQL("DELETE FROM `payments`");
       _db.execSQL("DELETE FROM `buffers`");
       _db.execSQL("DELETE FROM `monthly_balances`");
+      _db.execSQL("DELETE FROM `loan_funding`");
       _db.execSQL("DELETE FROM `profit_tracker`");
       super.setTransactionSuccessful();
     } finally {

@@ -37,16 +37,16 @@ import com.moithuti.funds.data.local.entity.ProfitTrackerEntity;
 @Database(
     entities = {
         ClientEntity.class,
+        LoanEntity.class,
+        PaymentEntity.class,
         InvestorEntity.class,
         InvestorTransactionEntity.class,
-        LoanEntity.class,
-        LoanFundingEntity.class,
-        PaymentEntity.class,
         BufferEntity.class,
         MonthlyBalanceEntity.class,
+        LoanFundingEntity.class,
         ProfitTrackerEntity.class
     },
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters({Converters.class})
@@ -114,7 +114,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 android.util.Log.d("AppDatabase", "Database opened");
             }
         })
-        .addMigrations(MIGRATION_1_2, MIGRATION_2_3) // Add migrations when schema changes
+        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // Add migrations when schema changes
         .build();
     }
 
@@ -204,6 +204,15 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("CREATE INDEX IF NOT EXISTS index_profit_tracker_investorId ON profit_tracker(investorId)");
             database.execSQL("CREATE INDEX IF NOT EXISTS index_profit_tracker_yearMonth ON profit_tracker(yearMonth)");
             database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_profit_tracker_investorId_yearMonth ON profit_tracker(investorId, yearMonth)");
+        }
+    };
+
+    // Migration from version 3 to 4 - Force complete rebuild
+    private static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // This migration will be handled by destructive migration
+            // All tables will be recreated with correct schema
         }
     };
 

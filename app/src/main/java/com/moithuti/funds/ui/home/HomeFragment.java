@@ -34,6 +34,15 @@ public class HomeFragment extends Fragment {
     private TextView totalLoanedText;
     private TextView totalRepaidText;
     private TextView totalAvailableText;
+    
+    // Profit tracking components
+    private TextView availableFundsText;
+    private TextView monthlyProfitText;
+    private TextView cumulativeProfitText;
+    private TextView interestEarnedText;
+    private PieChart profitPieChart;
+    private BarChart monthlyProfitChart;
+    
     private PieChart statusPieChart;
     private BarChart monthlyBarChart;
     private RecyclerView investorSummaryRecyclerView;
@@ -75,11 +84,15 @@ public class HomeFragment extends Fragment {
         totalLoanedText = view.findViewById(R.id.total_loaned);
         totalRepaidText = view.findViewById(R.id.total_repaid);
         totalAvailableText = view.findViewById(R.id.total_available);
+        
+        // Profit tracking components will be added when layout is updated
+        // For now, using existing text views to display profit metrics
+        
         statusPieChart = view.findViewById(R.id.status_pie_chart);
         monthlyBarChart = view.findViewById(R.id.monthly_bar_chart);
         investorSummaryRecyclerView = view.findViewById(R.id.investor_summary_recycler_view);
         loadingIndicator = view.findViewById(R.id.loading_indicator);
-        errorMessageText = view.findViewById(R.id.error_message);
+        errorMessageText = view.findViewById(R.id.error_message_text);
         
         // Setup RecyclerView
         investorSummaryAdapter = new InvestorSummaryAdapter();
@@ -114,6 +127,32 @@ public class HomeFragment extends Fragment {
                 updateDashboardStats(stats);
                 updateCharts(stats);
                 updateInvestorSummary(stats);
+            }
+        });
+        
+        // Profit tracking observers - using existing totalAvailableText for available funds
+        viewModel.getAvailableFundsLiveData().observe(getViewLifecycleOwner(), availableFunds -> {
+            if (availableFunds != null && totalAvailableText != null) {
+                totalAvailableText.setText(UiUtils.formatCurrency(availableFunds));
+            }
+        });
+        
+        // For now, show profit metrics in existing text views (if layout is updated later, these can be moved)
+        viewModel.getMonthlyProfitLiveData().observe(getViewLifecycleOwner(), monthlyProfit -> {
+            if (monthlyProfit != null && totalLoanedText != null) {
+                totalLoanedText.setText("Monthly Profit: " + UiUtils.formatCurrency(monthlyProfit));
+            }
+        });
+        
+        viewModel.getCumulativeProfitLiveData().observe(getViewLifecycleOwner(), cumulativeProfit -> {
+            if (cumulativeProfit != null && totalRepaidText != null) {
+                totalRepaidText.setText("Cumulative Profit: " + UiUtils.formatCurrency(cumulativeProfit));
+            }
+        });
+        
+        viewModel.getInterestEarnedLiveData().observe(getViewLifecycleOwner(), interestEarned -> {
+            if (interestEarned != null && totalInvestedText != null) {
+                totalInvestedText.setText("Interest Earned: " + UiUtils.formatCurrency(interestEarned));
             }
         });
         

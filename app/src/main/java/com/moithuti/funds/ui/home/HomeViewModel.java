@@ -632,7 +632,7 @@ public class HomeViewModel extends AndroidViewModel {
     /**
      * Get current year-month string
      */
-    private String getCurrentYearMonth() {
+    public String getCurrentYearMonth() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
         return sdf.format(new java.util.Date());
     }

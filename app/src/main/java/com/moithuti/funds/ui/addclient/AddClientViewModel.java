@@ -44,6 +44,7 @@ public class AddClientViewModel extends AndroidViewModel {
     private final MutableLiveData<String> errorMessageLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> successMessageLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> formValidLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> successLiveData = new MutableLiveData<>();
     
     // Results
     private final MutableLiveData<ClientEntity> createdClientLiveData = new MutableLiveData<>();
@@ -194,6 +195,77 @@ public class AddClientViewModel extends AndroidViewModel {
     }
 
     /**
+     * Create client only (without loan)
+     */
+    public void createClient(String name, String phone, String email, String address) {
+        try {
+            // Create client entity
+            ClientEntity client = new ClientEntity();
+            client.setUuid(UuidUtil.generateClientUuid());
+            client.setName(name.trim());
+            client.setPhone(phone.trim());
+            client.setNotes(email != null ? email.trim() : ""); // Using notes field for email temporarily
+            client.setStatus(Constants.CLIENT_STATUS_OWING);
+            client.setCreatedDate(System.currentTimeMillis());
+            client.setLastModified(System.currentTimeMillis());
+            client.setSyncStatus(com.moithuti.funds.sync.SyncStatus.PENDING.name());
+            client.setDeleted(false);
+
+            // Validate client
+            if (!clientRepository.validateClient(client)) {
+                errorMessageLiveData.setValue("Invalid client data");
+                successLiveData.setValue(false);
+                return;
+            }
+
+            // Save client
+            clientRepository.insertClient(client);
+            createdClientLiveData.setValue(client);
+            successLiveData.setValue(true);
+            successMessageLiveData.setValue("Client saved successfully");
+            
+        } catch (Exception e) {
+            Log.e("AddClientViewModel", "Error creating client", e);
+            errorMessageLiveData.setValue("Failed to save client: " + e.getMessage());
+            successLiveData.setValue(false);
+        }
+    }
+
+    /**
+     * Create client with loan
+     */
+    public void createClientWithLoan(String name, String phone, String email, String address, 
+                                   double loanAmount, double interestRate, int loanTerm) {
+        try {
+            // First create the client
+            createClient(name, phone, email, address);
+            
+            // Then create the loan if client creation was successful
+            if (Boolean.TRUE.equals(successLiveData.getValue())) {
+                ClientEntity client = createdClientLiveData.getValue();
+                if (client != null) {
+                    // Set loan data for the existing saveClient method to use
+                    clientNameLiveData.setValue(name);
+                    clientPhoneLiveData.setValue(phone);
+                    clientNotesLiveData.setValue(email);
+                    includeLoanLiveData.setValue(true);
+                    loanAmountLiveData.setValue(loanAmount);
+                    // Calculate due date from loan term (months)
+                    long dueDate = System.currentTimeMillis() + (loanTerm * 30L * 24 * 60 * 60 * 1000);
+                    loanDueDateLiveData.setValue(dueDate);
+                    
+                    createLoanForClient(client);
+                }
+            }
+            
+        } catch (Exception e) {
+            Log.e("AddClientViewModel", "Error creating client with loan", e);
+            errorMessageLiveData.setValue("Failed to save client and loan: " + e.getMessage());
+            successLiveData.setValue(false);
+        }
+    }
+
+    /**
      * Save client and optional loan
      */
     public void saveClient() {
@@ -236,11 +308,13 @@ public class AddClientViewModel extends AndroidViewModel {
             } else {
                 // Complete without loan
                 successMessageLiveData.setValue("Client saved successfully");
+                successLiveData.setValue(true);
                 isLoadingLiveData.setValue(false);
             }
 
         } catch (Exception e) {
             errorMessageLiveData.setValue("Error saving client: " + e.getMessage());
+            successLiveData.setValue(false);
             isLoadingLiveData.setValue(false);
         }
     }
@@ -462,6 +536,20 @@ public class AddClientViewModel extends AndroidViewModel {
      */
     public void clearSuccessMessage() {
         successMessageLiveData.setValue(null);
+    }
+
+    /**
+     * Get save success LiveData
+     */
+    public LiveData<Boolean> getSaveSuccess() {
+        return successLiveData;
+    }
+
+    /**
+     * Get save error LiveData
+     */
+    public LiveData<String> getSaveError() {
+        return errorMessageLiveData;
     }
 
     /**
