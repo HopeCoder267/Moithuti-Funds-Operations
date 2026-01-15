@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_clients"
+        android:icon="@drawable/ic_people"
+        android:title="Clients" />
+
+    <item
+        android:id="@+id/nav_add_client"
+        android:icon="@drawable/ic_add"
+        android:title="Add Client" />
+
+    <item
+        android:id="@+id/nav_money"
+        android:icon="@drawable/ic_account_balance"
+        android:title="Money" />
+
+</menu>

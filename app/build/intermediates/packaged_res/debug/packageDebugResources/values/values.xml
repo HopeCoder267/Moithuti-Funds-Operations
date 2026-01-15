@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#FF5722</color>
+    <color name="background">#FAFAFA</color>
+    <color name="black">#FF000000</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_stroke">#E0E0E0</color>
+    <color name="on_surface">#212121</color>
+    <color name="primary">#1976D2</color>
+    <color name="primary_dark">#1565C0</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="status_blacklisted">#F44336</color>
+    <color name="status_overdue">#FF9800</color>
+    <color name="status_owing">#9E9E9E</color>
+    <color name="status_paid">#4CAF50</color>
+    <color name="status_partial">#2196F3</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
+    <dimen name="chart_height">200dp</dimen>
+    <dimen name="chart_margin">16dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_xlarge">24dp</dimen>
+    <dimen name="status_indicator_size">12dp</dimen>
+    <dimen name="text_size_large">16sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_stat">32sp</dimen>
+    <dimen name="text_size_title">24sp</dimen>
+    <dimen name="text_size_xlarge">18sp</dimen>
+    <string name="add_new_client">Add New Client</string>
+    <string name="amount">Amount</string>
+    <string name="app_name">Moithuti Funds Operations</string>
+    <string name="cancel">Cancel</string>
+    <string name="client_name">Client Name</string>
+    <string name="client_notes">Notes (Optional)</string>
+    <string name="client_phone">Phone Number</string>
+    <string name="currency_symbol">R</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="date">Date</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="filter">Filter</string>
+    <string name="force_sync">Force Sync</string>
+    <string name="investor_summary">Investor Summary</string>
+    <string name="last_sync">Last sync: %s</string>
+    <string name="nav_add_client">Add Client</string>
+    <string name="nav_clients">Clients</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_money">Money</string>
+    <string name="notes">Notes</string>
+    <string name="offline">🔴 Offline</string>
+    <string name="online">🟢 Online</string>
+    <string name="overall_finance">Overall Finance</string>
+    <string name="save">Save</string>
+    <string name="search">Search</string>
+    <string name="status_blacklisted">Blacklisted</string>
+    <string name="status_overdue">Overdue</string>
+    <string name="status_owing">Owing</string>
+    <string name="status_paid">Paid</string>
+    <string name="status_partial">Partial</string>
+    <string name="sync">Sync</string>
+    <style name="Base.Theme.MoithutiFundsOperations" parent="Theme.Material3.DayNight">
+        
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorOnSecondary">@color/white</item>
+    </style>
+    <style name="StatCardTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+    <style name="StatCardValue">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="StatusIndicator">
+        <item name="android:layout_width">12dp</item>
+        <item name="android:layout_height">12dp</item>
+        <item name="android:background">@drawable/status_circle</item>
+    </style>
+    <style name="Theme.MoithutiFundsOperations" parent="Base.Theme.MoithutiFundsOperations"/>
+    <style name="Theme.MoithutiFundsOperations.NoActionBar" parent="Theme.MoithutiFundsOperations">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Widget.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardBackgroundColor">@color/card_background</item>
+    </style>
+</resources>

@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Moithuti Funds Operations</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_clients">Clients</string>
+    <string name="nav_add_client">Add Client</string>
+    <string name="nav_money">Money</string>
+    
+    <!-- Common -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="sync">Sync</string>
+    
+    <!-- Client Status -->
+    <string name="status_paid">Paid</string>
+    <string name="status_partial">Partial</string>
+    <string name="status_overdue">Overdue</string>
+    <string name="status_blacklisted">Blacklisted</string>
+    <string name="status_owing">Owing</string>
+    
+    <!-- Money -->
+    <string name="currency_symbol">R</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="notes">Notes</string>
+    
+    <!-- Forms -->
+    <string name="client_name">Client Name</string>
+    <string name="client_phone">Phone Number</string>
+    <string name="client_notes">Notes (Optional)</string>
+    <string name="add_new_client">Add New Client</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard">Dashboard</string>
+    <string name="overall_finance">Overall Finance</string>
+    <string name="investor_summary">Investor Summary</string>
+    
+    <!-- Sync -->
+    <string name="online">🟢 Online</string>
+    <string name="offline">🔴 Offline</string>
+    <string name="last_sync">Last sync: %s</string>
+    <string name="force_sync">Force Sync</string>
+</resources>

@@ -1,0 +1,58 @@
+com.moithuti.funds.app-lifecycle-viewmodel-ktx-2.7.0-0 /home/hope/.gradle/caches/8.11.1/transforms/001612dd417aad3345d24a3e0a0cf75d/transformed/lifecycle-viewmodel-ktx-2.7.0/res
+com.moithuti.funds.app-lifecycle-livedata-core-2.7.0-1 /home/hope/.gradle/caches/8.11.1/transforms/1981bd42fdee5118e4e90e0983f774c8/transformed/lifecycle-livedata-core-2.7.0/res
+com.moithuti.funds.app-work-runtime-ktx-2.8.1-2 /home/hope/.gradle/caches/8.11.1/transforms/1ab8ebcf7ee82865f38c2ac2615d99f4/transformed/work-runtime-ktx-2.8.1/res
+com.moithuti.funds.app-core-1.12.0-3 /home/hope/.gradle/caches/8.11.1/transforms/1ba7e8ad8c1ef9f29681128fe708e093/transformed/core-1.12.0/res
+com.moithuti.funds.app-lifecycle-process-2.7.0-4 /home/hope/.gradle/caches/8.11.1/transforms/1c9bcedcd46eb45a329212590972ace5/transformed/lifecycle-process-2.7.0/res
+com.moithuti.funds.app-core-ktx-1.12.0-5 /home/hope/.gradle/caches/8.11.1/transforms/1f6d6a92e328a95f991b435dd6d4e30c/transformed/core-ktx-1.12.0/res
+com.moithuti.funds.app-navigation-fragment-ktx-2.7.5-6 /home/hope/.gradle/caches/8.11.1/transforms/22ff447b44b340b3a43f57b2018a45cd/transformed/navigation-fragment-ktx-2.7.5/res
+com.moithuti.funds.app-savedstate-ktx-1.2.1-7 /home/hope/.gradle/caches/8.11.1/transforms/247d0742b6843407d8234bbfa3b1599a/transformed/savedstate-ktx-1.2.1/res
+com.moithuti.funds.app-navigation-common-2.7.5-8 /home/hope/.gradle/caches/8.11.1/transforms/25e47d20bc7c399460a20998c1102ea1/transformed/navigation-common-2.7.5/res
+com.moithuti.funds.app-constraintlayout-2.1.4-9 /home/hope/.gradle/caches/8.11.1/transforms/2b0229d022ee8d0f13c8a9c4a18d2dc0/transformed/constraintlayout-2.1.4/res
+com.moithuti.funds.app-lifecycle-viewmodel-savedstate-2.7.0-10 /home/hope/.gradle/caches/8.11.1/transforms/2c6be3d7b02192f4cadae5247f703474/transformed/lifecycle-viewmodel-savedstate-2.7.0/res
+com.moithuti.funds.app-lifecycle-runtime-ktx-2.7.0-11 /home/hope/.gradle/caches/8.11.1/transforms/30512b55d1e4d2f119ab7f3912204558/transformed/lifecycle-runtime-ktx-2.7.0/res
+com.moithuti.funds.app-navigation-ui-2.7.5-12 /home/hope/.gradle/caches/8.11.1/transforms/31cfd70ef7779d98d0a558c971bea57d/transformed/navigation-ui-2.7.5/res
+com.moithuti.funds.app-cardview-1.0.0-13 /home/hope/.gradle/caches/8.11.1/transforms/326db582dbc31446f6f55002f17cf6c3/transformed/cardview-1.0.0/res
+com.moithuti.funds.app-navigation-ui-ktx-2.7.5-14 /home/hope/.gradle/caches/8.11.1/transforms/366fa15f6e10db3685b9969cd62e3b2a/transformed/navigation-ui-ktx-2.7.5/res
+com.moithuti.funds.app-sqlite-framework-2.4.0-15 /home/hope/.gradle/caches/8.11.1/transforms/3b52737dcae48d9076b7b03a067ccd3d/transformed/sqlite-framework-2.4.0/res
+com.moithuti.funds.app-transition-1.4.1-16 /home/hope/.gradle/caches/8.11.1/transforms/3fa5ac1b8a33732c85a81bcc581507a4/transformed/transition-1.4.1/res
+com.moithuti.funds.app-core-runtime-2.2.0-17 /home/hope/.gradle/caches/8.11.1/transforms/43a6c958f0b3f1724a2b3458242bad2e/transformed/core-runtime-2.2.0/res
+com.moithuti.funds.app-emoji2-views-helper-1.2.0-18 /home/hope/.gradle/caches/8.11.1/transforms/458b976d957c2f416b6c68a20599194d/transformed/emoji2-views-helper-1.2.0/res
+com.moithuti.funds.app-lifecycle-viewmodel-2.7.0-19 /home/hope/.gradle/caches/8.11.1/transforms/49560c41c95d2e3374303762ac982087/transformed/lifecycle-viewmodel-2.7.0/res
+com.moithuti.funds.app-fragment-ktx-1.6.2-20 /home/hope/.gradle/caches/8.11.1/transforms/4dff8505c663fbe59e96b4d7d9b23ceb/transformed/fragment-ktx-1.6.2/res
+com.moithuti.funds.app-material-1.10.0-21 /home/hope/.gradle/caches/8.11.1/transforms/4f1b517323591e9184e2c4c2fa4c5085/transformed/material-1.10.0/res
+com.moithuti.funds.app-fragment-1.6.2-22 /home/hope/.gradle/caches/8.11.1/transforms/51ddeca2a3c21a038cd8d13a9f694b4d/transformed/fragment-1.6.2/res
+com.moithuti.funds.app-appcompat-1.6.1-23 /home/hope/.gradle/caches/8.11.1/transforms/5fe9b0ce70af42447ed277e2b14f2364/transformed/appcompat-1.6.1/res
+com.moithuti.funds.app-viewpager2-1.0.0-24 /home/hope/.gradle/caches/8.11.1/transforms/60f05bd5b6d66f284ba3ec85191c1321/transformed/viewpager2-1.0.0/res
+com.moithuti.funds.app-lifecycle-livedata-core-ktx-2.7.0-25 /home/hope/.gradle/caches/8.11.1/transforms/743f210a8368cee569d6ce7e03e58d86/transformed/lifecycle-livedata-core-ktx-2.7.0/res
+com.moithuti.funds.app-activity-1.8.0-26 /home/hope/.gradle/caches/8.11.1/transforms/763ffec645abde4e19f9529908f42386/transformed/activity-1.8.0/res
+com.moithuti.funds.app-navigation-common-ktx-2.7.5-27 /home/hope/.gradle/caches/8.11.1/transforms/84fdaba07d7146d8396150eae0cf3a5a/transformed/navigation-common-ktx-2.7.5/res
+com.moithuti.funds.app-emoji2-1.2.0-28 /home/hope/.gradle/caches/8.11.1/transforms/88c46bd535d7a2cdf0b831d134b4721b/transformed/emoji2-1.2.0/res
+com.moithuti.funds.app-lifecycle-livedata-2.7.0-29 /home/hope/.gradle/caches/8.11.1/transforms/93634864505f55f73d61ec7f298cca7f/transformed/lifecycle-livedata-2.7.0/res
+com.moithuti.funds.app-room-runtime-2.6.0-30 /home/hope/.gradle/caches/8.11.1/transforms/9439d1f41e8d071190297bd64f90f9ec/transformed/room-runtime-2.6.0/res
+com.moithuti.funds.app-startup-runtime-1.1.1-31 /home/hope/.gradle/caches/8.11.1/transforms/99132a38243d32a27cc8358b15e062c7/transformed/startup-runtime-1.1.1/res
+com.moithuti.funds.app-coordinatorlayout-1.1.0-32 /home/hope/.gradle/caches/8.11.1/transforms/9aec70dab6c5e9b5ced9297a8e227e10/transformed/coordinatorlayout-1.1.0/res
+com.moithuti.funds.app-navigation-runtime-ktx-2.7.5-33 /home/hope/.gradle/caches/8.11.1/transforms/9ebbb5629daeb9c2c2dd0e24a1be408f/transformed/navigation-runtime-ktx-2.7.5/res
+com.moithuti.funds.app-profileinstaller-1.3.0-34 /home/hope/.gradle/caches/8.11.1/transforms/9f3cc561c0c83e3631e38e065610373a/transformed/profileinstaller-1.3.0/res
+com.moithuti.funds.app-room-ktx-2.6.0-35 /home/hope/.gradle/caches/8.11.1/transforms/b108c70c6484a89d04dfcd63c4b0c9ed/transformed/room-ktx-2.6.0/res
+com.moithuti.funds.app-navigation-runtime-2.7.5-36 /home/hope/.gradle/caches/8.11.1/transforms/b64f0408c2ba79813ec479e57c51b171/transformed/navigation-runtime-2.7.5/res
+com.moithuti.funds.app-lifecycle-livedata-ktx-2.7.0-37 /home/hope/.gradle/caches/8.11.1/transforms/b701656a146b53811302974e9de955bb/transformed/lifecycle-livedata-ktx-2.7.0/res
+com.moithuti.funds.app-drawerlayout-1.1.1-38 /home/hope/.gradle/caches/8.11.1/transforms/bd65cab2014a492eb1a4d08f0b9f4ca7/transformed/drawerlayout-1.1.1/res
+com.moithuti.funds.app-appcompat-resources-1.6.1-39 /home/hope/.gradle/caches/8.11.1/transforms/c0a49632c742d9728aa4cdadbf1d1ca0/transformed/appcompat-resources-1.6.1/res
+com.moithuti.funds.app-window-1.0.0-40 /home/hope/.gradle/caches/8.11.1/transforms/c64f47af705a85758bb1c6a6755783a5/transformed/window-1.0.0/res
+com.moithuti.funds.app-slidingpanelayout-1.2.0-41 /home/hope/.gradle/caches/8.11.1/transforms/ce82d93b15bca3c145968fff7c5689d0/transformed/slidingpanelayout-1.2.0/res
+com.moithuti.funds.app-lifecycle-runtime-2.7.0-42 /home/hope/.gradle/caches/8.11.1/transforms/dcef3f226fdc27f3afb815d98081c383/transformed/lifecycle-runtime-2.7.0/res
+com.moithuti.funds.app-work-runtime-2.8.1-43 /home/hope/.gradle/caches/8.11.1/transforms/df5d8dcf3968b401f4fc6301ee996aea/transformed/work-runtime-2.8.1/res
+com.moithuti.funds.app-activity-ktx-1.8.0-44 /home/hope/.gradle/caches/8.11.1/transforms/e317a5ed1f3f0a48f987e43f79de94a2/transformed/activity-ktx-1.8.0/res
+com.moithuti.funds.app-annotation-experimental-1.3.0-45 /home/hope/.gradle/caches/8.11.1/transforms/e799d889b3637427f2254631bc331f99/transformed/annotation-experimental-1.3.0/res
+com.moithuti.funds.app-navigation-fragment-2.7.5-46 /home/hope/.gradle/caches/8.11.1/transforms/ec729092a6738c0a093987ffeaf5c5c7/transformed/navigation-fragment-2.7.5/res
+com.moithuti.funds.app-sqlite-2.4.0-47 /home/hope/.gradle/caches/8.11.1/transforms/ef0ebefcb4ee8ad7c1b2e48e5c0bb842/transformed/sqlite-2.4.0/res
+com.moithuti.funds.app-lifecycle-service-2.7.0-48 /home/hope/.gradle/caches/8.11.1/transforms/f45400ac483396751b22a5087d93a7f3/transformed/lifecycle-service-2.7.0/res
+com.moithuti.funds.app-savedstate-1.2.1-49 /home/hope/.gradle/caches/8.11.1/transforms/f68243f01ec979a60bcd2e0a8e0280c9/transformed/savedstate-1.2.1/res
+com.moithuti.funds.app-recyclerview-1.1.0-50 /home/hope/.gradle/caches/8.11.1/transforms/fa399e99f6bcc06970f3a3fb90363e42/transformed/recyclerview-1.1.0/res
+com.moithuti.funds.app-pngs-51 /home/hope/Documents/Moithuti Funds Operations/app/build/generated/res/pngs/debug
+com.moithuti.funds.app-resValues-52 /home/hope/Documents/Moithuti Funds Operations/app/build/generated/res/resValues/debug
+com.moithuti.funds.app-packageDebugResources-53 /home/hope/Documents/Moithuti Funds Operations/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.moithuti.funds.app-packageDebugResources-54 /home/hope/Documents/Moithuti Funds Operations/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.moithuti.funds.app-debug-55 /home/hope/Documents/Moithuti Funds Operations/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.moithuti.funds.app-debug-56 /home/hope/Documents/Moithuti Funds Operations/app/src/debug/res
+com.moithuti.funds.app-main-57 /home/hope/Documents/Moithuti Funds Operations/app/src/main/res

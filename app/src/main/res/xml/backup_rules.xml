@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Include app data in backup -->
+    <include domain="sharedpref" path="app_prefs.xml" />
+    <include domain="database" path="funds_database" />
+    
+    <!-- Exclude sensitive data from backup -->
+    <exclude domain="sharedpref" path="auth_prefs.xml" />
+    <exclude domain="file" path="service_account.json" />
+</full-backup-content>

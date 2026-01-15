@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.moithuti.funds.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_clients"
+        android:name="com.moithuti.funds.ui.clients.ClientsFragment"
+        android:label="Clients"
+        tools:layout="@layout/fragment_clients" />
+
+    <fragment
+        android:id="@+id/nav_add_client"
+        android:name="com.moithuti.funds.ui.addclient.AddClientFragment"
+        android:label="Add Client"
+        tools:layout="@layout/fragment_add_client" />
+
+    <fragment
+        android:id="@+id/nav_money"
+        android:name="com.moithuti.funds.ui.money.MoneyFragment"
+        android:label="Money"
+        tools:layout="@layout/fragment_money" />
+
+    <activity
+        android:id="@+id/nav_client_profile"
+        android:name="com.moithuti.funds.ui.clients.ClientProfileActivity"
+        android:label="Client Profile"
+        tools:layout="@layout/activity_client_profile" />
+
+    <activity
+        android:id="@+id/nav_investor_detail"
+        android:name="com.moithuti.funds.ui.money.InvestorDetailActivity"
+        android:label="Investor Detail"
+        tools:layout="@layout/activity_investor_detail" />
+
+</navigation>

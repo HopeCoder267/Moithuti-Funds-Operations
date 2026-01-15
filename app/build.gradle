@@ -1,0 +1,87 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.moithuti.funds'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.moithuti.funds"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    packagingOptions {
+        pickFirst '**/META-INF/{AL2.0,LGPL2.1}'
+        pickFirst '**/META-INF/DEPENDENCIES'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {  // Add this block
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    // Android Core
+    implementation 'androidx.core:core-ktx:1.12.0'  // Add this
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'  // Add -ktx
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'  // Add -ktx
+
+    // Lifecycle & ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'  // Add -ktx
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'  // Add -ktx
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'  // Add -ktx
+
+    // Room Database
+    implementation 'androidx.room:room-runtime:2.6.0'
+    implementation 'androidx.room:room-ktx:2.6.0'
+    annotationProcessor 'androidx.room:room-compiler:2.6.0'
+
+    // WorkManager for background sync
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'  // Add -ktx
+
+    // Charts - FIXED version
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Firebase - DISABLED FOR NOW (add back when google-services.json is available)
+    // implementation platform('com.google.firebase:firebase-bom:32.5.0')
+    // implementation 'com.google.firebase:firebase-analytics'
+    // implementation 'com.google.firebase:firebase-firestore'  // If you use Firestore
+    // implementation 'com.google.firebase:firebase-auth'  // If you use Auth
+
+    // Google Sheets API
+    implementation 'com.google.api-client:google-api-client-android:2.0.0'
+    implementation 'com.google.apis:google-api-services-sheets:v4-rev20220927-2.0.0'
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.19.0'
+    implementation 'com.google.guava:guava:32.1.2-android'
+
+    // Network
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
