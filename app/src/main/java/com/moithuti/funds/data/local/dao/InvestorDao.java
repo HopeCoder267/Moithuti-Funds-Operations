@@ -55,6 +55,9 @@ public interface InvestorDao {
     @Query("SELECT * FROM investors WHERE deleted = 0 AND isMainAccount = 0 ORDER BY name ASC")
     List<InvestorEntity> getOtherInvestors();
 
+    @Query("SELECT * FROM investors WHERE deleted = 0 AND name = :name")
+    InvestorEntity getInvestorByName(String name);
+
     @Query("SELECT * FROM investors WHERE syncStatus = 'PENDING' AND deleted = 0")
     List<InvestorEntity> getPendingSyncInvestors();
 

@@ -51,38 +51,52 @@ public class InvestorRepository {
     }
 
     /**
-     * Insert new investor
-     * @param investor the investor to insert
+     * Create a new investor with validation
+     * @param name investor name (must be unique)
+     * @param initialInvestment initial investment amount
+     * @param monthlyTopUp optional monthly top-up amount
+     * @return investor UUID if successful, null if failed
      */
-    public void insertInvestor(InvestorEntity investor) {
-        executorService.execute(() -> {
-            try {
-                // Ensure UUID is set
-                if (UuidUtil.isEmpty(investor.getUuid())) {
-                    investor.setUuid(UuidUtil.generateInvestorUuid());
-                }
-                
-                // Set timestamps and sync status
-                investor.setCreatedDate(System.currentTimeMillis());
-                investor.setLastModified(System.currentTimeMillis());
-                investor.setSyncStatus(SyncStatus.PENDING.name());
-                investor.setDeleted(false);
-                
-                // If this is the main account, clear existing main account
-                if (investor.isMainAccount()) {
-                    investorDao.clearMainAccount(System.currentTimeMillis());
-                }
-                
-                long result = investorDao.insert(investor);
-                Log.d(TAG, "Investor inserted: " + investor.getUuid() + ", result: " + result);
-                
+    public String createInvestor(String name, double initialInvestment, double monthlyTopUp) {
+        try {
+            // Validate investor name uniqueness
+            if (investorDao.getInvestorByName(name) != null) {
+                Log.e(TAG, "Investor with name '" + name + "' already exists");
+                return null;
+            }
+            
+            // Cannot create another Main Account
+            if ("Main Account".equals(name)) {
+                Log.e(TAG, "Cannot create duplicate Main Account");
+                return null;
+            }
+            
+            InvestorEntity investor = new InvestorEntity();
+            investor.setUuid(UuidUtil.generateInvestorUuid());
+            investor.setName(name);
+            investor.setMainAccount(false); // Only Main Account can be created by database
+            investor.setCreatedDate(System.currentTimeMillis());
+            investor.setLastModified(System.currentTimeMillis());
+            investor.setSyncStatus(SyncStatus.PENDING.name());
+            investor.setDeleted(false);
+            
+            long result = investorDao.insert(investor);
+            
+            if (result > 0) {
                 // Trigger sync
                 triggerSync();
                 
-            } catch (Exception e) {
-                Log.e(TAG, "Error inserting investor", e);
+                Log.d(TAG, "Created investor: " + name + " with UUID: " + investor.getUuid());
+                return investor.getUuid();
+            } else {
+                Log.e(TAG, "Failed to create investor: " + name);
+                return null;
             }
-        });
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating investor", e);
+            return null;
+        }
     }
 
     /**
@@ -115,23 +129,37 @@ public class InvestorRepository {
     }
 
     /**
-     * Delete investor (soft delete)
+     * Delete investor (soft delete) - Main Account cannot be deleted
      * @param investorId the investor ID to delete
+     * @return true if successful, false if Main Account or error
      */
-    public void deleteInvestor(String investorId) {
-        executorService.execute(() -> {
-            try {
-                long timestamp = System.currentTimeMillis();
-                int result = investorDao.softDelete(investorId, timestamp);
-                Log.d(TAG, "Investor soft deleted: " + investorId + ", result: " + result);
-                
-                // Trigger sync
-                triggerSync();
-                
-            } catch (Exception e) {
-                Log.e(TAG, "Error deleting investor", e);
+    public boolean deleteInvestor(String investorId) {
+        try {
+            InvestorEntity investor = investorDao.getInvestorById(investorId);
+            if (investor == null) {
+                Log.e(TAG, "Investor not found: " + investorId);
+                return false;
             }
-        });
+            
+            // Cannot delete Main Account
+            if (investor.isMainAccount()) {
+                Log.e(TAG, "Cannot delete Main Account");
+                return false;
+            }
+            
+            long timestamp = System.currentTimeMillis();
+            int result = investorDao.softDelete(investorId, timestamp);
+            Log.d(TAG, "Investor soft deleted: " + investorId + ", result: " + result);
+            
+            // Trigger sync
+            triggerSync();
+            
+            return result > 0;
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error deleting investor", e);
+            return false;
+        }
     }
 
     /**
@@ -369,6 +397,15 @@ public class InvestorRepository {
             Log.e(TAG, "Error getting investor by name", e);
             return null;
         }
+    }
+
+    /**
+     * Get Main Account UUID
+     * @return Main Account UUID or null if not found
+     */
+    public String getMainAccountId() {
+        InvestorEntity mainAccount = getMainAccount();
+        return mainAccount != null ? mainAccount.getUuid() : null;
     }
 
     /**

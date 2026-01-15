@@ -269,9 +269,17 @@ public class MoneyViewModel extends AndroidViewModel {
             }
             
             // Save investor
-            investorRepository.insertInvestor(investor);
+            String investorId = investorRepository.createInvestor(
+                investor.getName(), 
+                0.0, // Default initial investment
+                0.0  // Default monthly top-up
+            );
             
-            successMessageLiveData.setValue("Investor saved successfully");
+            if (investorId != null) {
+                successMessageLiveData.setValue("Investor saved successfully");
+            } else {
+                errorMessageLiveData.setValue("Failed to create investor");
+            }
             isLoadingLiveData.setValue(false);
             
             // Clear form

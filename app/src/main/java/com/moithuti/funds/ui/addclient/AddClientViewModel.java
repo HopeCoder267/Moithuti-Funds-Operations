@@ -1,6 +1,7 @@
 package com.moithuti.funds.ui.addclient;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -8,8 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.moithuti.funds.data.local.entity.ClientEntity;
 import com.moithuti.funds.data.local.entity.LoanEntity;
+import com.moithuti.funds.data.local.entity.LoanFundingEntity;
 import com.moithuti.funds.data.repository.ClientRepository;
+import com.moithuti.funds.data.repository.InvestorRepository;
 import com.moithuti.funds.data.repository.LoanRepository;
+import com.moithuti.funds.data.repository.ProfitTrackerRepository;
 import com.moithuti.funds.ui.common.UiUtils;
 import com.moithuti.funds.util.Constants;
 import com.moithuti.funds.util.UuidUtil;
@@ -22,6 +26,8 @@ public class AddClientViewModel extends AndroidViewModel {
 
     private final ClientRepository clientRepository;
     private final LoanRepository loanRepository;
+    private final InvestorRepository investorRepository;
+    private final ProfitTrackerRepository profitTrackerRepository;
     
     // Form data
     private final MutableLiveData<String> clientNameLiveData = new MutableLiveData<>();
@@ -49,6 +55,8 @@ public class AddClientViewModel extends AndroidViewModel {
         
         this.clientRepository = ClientRepository.getInstance(application);
         this.loanRepository = LoanRepository.getInstance(application);
+        this.investorRepository = InvestorRepository.getInstance(application);
+        this.profitTrackerRepository = ProfitTrackerRepository.getInstance(application);
         
         // Initialize form data
         clientNameLiveData.setValue("");
@@ -238,7 +246,7 @@ public class AddClientViewModel extends AndroidViewModel {
     }
 
     /**
-     * Create loan for client
+     * Create loan for client with funding source
      */
     private void createLoanForClient(ClientEntity client) {
         try {
@@ -265,6 +273,12 @@ public class AddClientViewModel extends AndroidViewModel {
             loanRepository.insertLoan(loan);
             createdLoanLiveData.setValue(loan);
 
+            // Create loan funding from Main Account (default behavior)
+            createLoanFunding(loan.getUuid(), null, loan.getAmount());
+
+            // Update profit tracker for loan issuance
+            updateProfitTrackerForLoan(loan.getAmount());
+
             // Update client status to partial since they now have a loan
             clientRepository.updateClientStatus(client.getUuid(), Constants.CLIENT_STATUS_PARTIAL);
 
@@ -274,6 +288,29 @@ public class AddClientViewModel extends AndroidViewModel {
         } catch (Exception e) {
             errorMessageLiveData.setValue("Error creating loan: " + e.getMessage());
             isLoadingLiveData.setValue(false);
+        }
+    }
+
+    /**
+     * Create loan funding record
+     */
+    private void createLoanFunding(String loanId, String investorId, double amount) {
+        try {
+            LoanFundingEntity funding = new LoanFundingEntity();
+            funding.setUuid(UuidUtil.generateLoanFundingUuid());
+            funding.setLoanId(loanId);
+            funding.setInvestorId(investorId); // null for Main Account
+            funding.setAmount(amount);
+            funding.setCreatedDate(System.currentTimeMillis());
+            funding.setLastModified(System.currentTimeMillis());
+            funding.setSyncStatus(com.moithuti.funds.sync.SyncStatus.PENDING.name());
+            funding.setDeleted(false);
+
+            loanRepository.insertLoanFunding(funding);
+            Log.d("AddClientViewModel", "Created loan funding: " + funding.getUuid() + " amount: " + amount);
+
+        } catch (Exception e) {
+            Log.e("AddClientViewModel", "Error creating loan funding", e);
         }
     }
 
@@ -425,6 +462,31 @@ public class AddClientViewModel extends AndroidViewModel {
      */
     public void clearSuccessMessage() {
         successMessageLiveData.setValue(null);
+    }
+
+    /**
+     * Update profit tracker for loan issuance
+     */
+    private void updateProfitTrackerForLoan(double loanAmount) {
+        try {
+            String currentMonth = ProfitTrackerRepository.getCurrentYearMonth();
+            
+            // Get existing profit tracker for current month or create new
+            // For now, we'll update with the loan amount as monthly loans issued
+            // The repository will handle the cumulative calculations
+            profitTrackerRepository.updateMonthlyProfit(
+                null, // Main Account (null investorId)
+                currentMonth,
+                loanAmount, // monthlyLoansIssued
+                0.0, // monthlyRepaymentsReceived (no repayment yet)
+                0.0  // monthlyInterest (no interest yet)
+            );
+            
+            Log.d("AddClientViewModel", "Updated profit tracker for loan issuance: " + loanAmount);
+            
+        } catch (Exception e) {
+            Log.e("AddClientViewModel", "Error updating profit tracker for loan", e);
+        }
     }
 
     @Override

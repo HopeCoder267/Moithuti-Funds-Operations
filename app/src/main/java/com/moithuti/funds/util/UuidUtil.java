@@ -257,17 +257,6 @@ public class UuidUtil {
     }
 
     /**
-     * Create a deterministic UUID from string (for testing)
-     * @param input the input string
-     * @return deterministic UUID
-     */
-    public static String deterministicUuid(String input) {
-        // This is a simple deterministic UUID generator for testing purposes
-        // In production, always use generateUuid()
-        return UUID.nameUUIDFromBytes(input.getBytes()).toString();
-    }
-
-    /**
      * Compare two UUID strings safely
      * @param uuid1 first UUID
      * @param uuid2 second UUID
@@ -296,5 +285,13 @@ public class UuidUtil {
      */
     public static String ensureUuid(String uuid) {
         return isEmpty(uuid) ? generateUuid() : uuid;
+    }
+
+    /**
+     * Generate a profit tracker UUID
+     * @return profit tracker UUID string
+     */
+    public static String generateProfitTrackerUuid() {
+        return generateUuid("profit_tracker");
     }
 }

@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import com.moithuti.funds.data.local.AppDatabase;
 import com.moithuti.funds.data.local.dao.LoanDao;
+import com.moithuti.funds.data.local.dao.LoanFundingDao;
 import com.moithuti.funds.data.local.dao.PaymentDao;
 import com.moithuti.funds.data.local.entity.LoanEntity;
+import com.moithuti.funds.data.local.entity.LoanFundingEntity;
 import com.moithuti.funds.data.local.entity.PaymentEntity;
 import com.moithuti.funds.sync.SyncStatus;
 import com.moithuti.funds.util.Constants;
@@ -27,6 +29,7 @@ public class LoanRepository {
     private static final String TAG = "LoanRepository";
     
     private final LoanDao loanDao;
+    private final LoanFundingDao loanFundingDao;
     private final PaymentDao paymentDao;
     private final ExecutorService executorService;
     private final Application application;
@@ -50,6 +53,7 @@ public class LoanRepository {
         this.application = application;
         AppDatabase database = AppDatabase.getInstance(application);
         this.loanDao = database.loanDao();
+        this.loanFundingDao = database.loanFundingDao();
         this.paymentDao = database.paymentDao();
         this.executorService = Executors.newSingleThreadExecutor();
     }
@@ -128,6 +132,36 @@ public class LoanRepository {
                 
             } catch (Exception e) {
                 Log.e(TAG, "Error deleting loan", e);
+            }
+        });
+    }
+
+    /**
+     * Insert loan funding
+     * @param funding the loan funding to insert
+     */
+    public void insertLoanFunding(LoanFundingEntity funding) {
+        executorService.execute(() -> {
+            try {
+                // Ensure UUID is set
+                if (UuidUtil.isEmpty(funding.getUuid())) {
+                    funding.setUuid(UuidUtil.generateLoanFundingUuid());
+                }
+                
+                // Set timestamps and sync status
+                funding.setCreatedDate(System.currentTimeMillis());
+                funding.setLastModified(System.currentTimeMillis());
+                funding.setSyncStatus(SyncStatus.PENDING.name());
+                funding.setDeleted(false);
+                
+                loanFundingDao.insert(funding);
+                Log.d(TAG, "Loan funding inserted: " + funding.getUuid());
+                
+                // Trigger sync
+                triggerSync();
+                
+            } catch (Exception e) {
+                Log.e(TAG, "Error inserting loan funding", e);
             }
         });
     }
