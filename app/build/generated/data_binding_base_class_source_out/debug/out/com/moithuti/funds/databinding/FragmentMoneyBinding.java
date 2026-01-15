@@ -29,10 +29,19 @@ public final class FragmentMoneyBinding implements ViewBinding {
   public final Button addInvestorButton;
 
   @NonNull
+  public final Button editMainAccountButton;
+
+  @NonNull
   public final TextView errorMessageText;
 
   @NonNull
   public final RecyclerView fundingInvestorsRecyclerView;
+
+  @NonNull
+  public final TextInputEditText investorAmountEditText;
+
+  @NonNull
+  public final TextInputLayout investorAmountLayout;
 
   @NonNull
   public final TextInputEditText investorNameEditText;
@@ -62,10 +71,22 @@ public final class FragmentMoneyBinding implements ViewBinding {
   public final LinearLayout loanContent;
 
   @NonNull
+  public final TextInputEditText mainAccountBalanceEditText;
+
+  @NonNull
+  public final TextInputLayout mainAccountBalanceLayout;
+
+  @NonNull
+  public final TextView mainAccountBalanceText;
+
+  @NonNull
   public final TabLayout moneyTabs;
 
   @NonNull
   public final Button saveInvestorButton;
+
+  @NonNull
+  public final Button saveMainAccountButton;
 
   @NonNull
   public final TextView successMessageText;
@@ -74,18 +95,26 @@ public final class FragmentMoneyBinding implements ViewBinding {
   public final TextView totalFundingText;
 
   private FragmentMoneyBinding(@NonNull LinearLayout rootView, @NonNull Button addInvestorButton,
-      @NonNull TextView errorMessageText, @NonNull RecyclerView fundingInvestorsRecyclerView,
+      @NonNull Button editMainAccountButton, @NonNull TextView errorMessageText,
+      @NonNull RecyclerView fundingInvestorsRecyclerView,
+      @NonNull TextInputEditText investorAmountEditText,
+      @NonNull TextInputLayout investorAmountLayout,
       @NonNull TextInputEditText investorNameEditText, @NonNull TextInputLayout investorNameLayout,
       @NonNull LinearLayout investorsContent, @NonNull RecyclerView investorsRecyclerView,
       @NonNull Button issueLoanButton, @NonNull ProgressBar loadingIndicator,
       @NonNull TextInputEditText loanAmountEditText, @NonNull TextInputLayout loanAmountLayout,
-      @NonNull LinearLayout loanContent, @NonNull TabLayout moneyTabs,
-      @NonNull Button saveInvestorButton, @NonNull TextView successMessageText,
+      @NonNull LinearLayout loanContent, @NonNull TextInputEditText mainAccountBalanceEditText,
+      @NonNull TextInputLayout mainAccountBalanceLayout, @NonNull TextView mainAccountBalanceText,
+      @NonNull TabLayout moneyTabs, @NonNull Button saveInvestorButton,
+      @NonNull Button saveMainAccountButton, @NonNull TextView successMessageText,
       @NonNull TextView totalFundingText) {
     this.rootView = rootView;
     this.addInvestorButton = addInvestorButton;
+    this.editMainAccountButton = editMainAccountButton;
     this.errorMessageText = errorMessageText;
     this.fundingInvestorsRecyclerView = fundingInvestorsRecyclerView;
+    this.investorAmountEditText = investorAmountEditText;
+    this.investorAmountLayout = investorAmountLayout;
     this.investorNameEditText = investorNameEditText;
     this.investorNameLayout = investorNameLayout;
     this.investorsContent = investorsContent;
@@ -95,8 +124,12 @@ public final class FragmentMoneyBinding implements ViewBinding {
     this.loanAmountEditText = loanAmountEditText;
     this.loanAmountLayout = loanAmountLayout;
     this.loanContent = loanContent;
+    this.mainAccountBalanceEditText = mainAccountBalanceEditText;
+    this.mainAccountBalanceLayout = mainAccountBalanceLayout;
+    this.mainAccountBalanceText = mainAccountBalanceText;
     this.moneyTabs = moneyTabs;
     this.saveInvestorButton = saveInvestorButton;
+    this.saveMainAccountButton = saveMainAccountButton;
     this.successMessageText = successMessageText;
     this.totalFundingText = totalFundingText;
   }
@@ -134,6 +167,12 @@ public final class FragmentMoneyBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.edit_main_account_button;
+      Button editMainAccountButton = ViewBindings.findChildViewById(rootView, id);
+      if (editMainAccountButton == null) {
+        break missingId;
+      }
+
       id = R.id.error_message_text;
       TextView errorMessageText = ViewBindings.findChildViewById(rootView, id);
       if (errorMessageText == null) {
@@ -143,6 +182,18 @@ public final class FragmentMoneyBinding implements ViewBinding {
       id = R.id.funding_investors_recycler_view;
       RecyclerView fundingInvestorsRecyclerView = ViewBindings.findChildViewById(rootView, id);
       if (fundingInvestorsRecyclerView == null) {
+        break missingId;
+      }
+
+      id = R.id.investor_amount_edit_text;
+      TextInputEditText investorAmountEditText = ViewBindings.findChildViewById(rootView, id);
+      if (investorAmountEditText == null) {
+        break missingId;
+      }
+
+      id = R.id.investor_amount_layout;
+      TextInputLayout investorAmountLayout = ViewBindings.findChildViewById(rootView, id);
+      if (investorAmountLayout == null) {
         break missingId;
       }
 
@@ -200,6 +251,24 @@ public final class FragmentMoneyBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.main_account_balance_edit_text;
+      TextInputEditText mainAccountBalanceEditText = ViewBindings.findChildViewById(rootView, id);
+      if (mainAccountBalanceEditText == null) {
+        break missingId;
+      }
+
+      id = R.id.main_account_balance_layout;
+      TextInputLayout mainAccountBalanceLayout = ViewBindings.findChildViewById(rootView, id);
+      if (mainAccountBalanceLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.main_account_balance_text;
+      TextView mainAccountBalanceText = ViewBindings.findChildViewById(rootView, id);
+      if (mainAccountBalanceText == null) {
+        break missingId;
+      }
+
       id = R.id.money_tabs;
       TabLayout moneyTabs = ViewBindings.findChildViewById(rootView, id);
       if (moneyTabs == null) {
@@ -209,6 +278,12 @@ public final class FragmentMoneyBinding implements ViewBinding {
       id = R.id.save_investor_button;
       Button saveInvestorButton = ViewBindings.findChildViewById(rootView, id);
       if (saveInvestorButton == null) {
+        break missingId;
+      }
+
+      id = R.id.save_main_account_button;
+      Button saveMainAccountButton = ViewBindings.findChildViewById(rootView, id);
+      if (saveMainAccountButton == null) {
         break missingId;
       }
 
@@ -224,11 +299,13 @@ public final class FragmentMoneyBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentMoneyBinding((LinearLayout) rootView, addInvestorButton, errorMessageText,
-          fundingInvestorsRecyclerView, investorNameEditText, investorNameLayout, investorsContent,
-          investorsRecyclerView, issueLoanButton, loadingIndicator, loanAmountEditText,
-          loanAmountLayout, loanContent, moneyTabs, saveInvestorButton, successMessageText,
-          totalFundingText);
+      return new FragmentMoneyBinding((LinearLayout) rootView, addInvestorButton,
+          editMainAccountButton, errorMessageText, fundingInvestorsRecyclerView,
+          investorAmountEditText, investorAmountLayout, investorNameEditText, investorNameLayout,
+          investorsContent, investorsRecyclerView, issueLoanButton, loadingIndicator,
+          loanAmountEditText, loanAmountLayout, loanContent, mainAccountBalanceEditText,
+          mainAccountBalanceLayout, mainAccountBalanceText, moneyTabs, saveInvestorButton,
+          saveMainAccountButton, successMessageText, totalFundingText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

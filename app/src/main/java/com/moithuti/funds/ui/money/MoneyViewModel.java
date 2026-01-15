@@ -48,6 +48,10 @@ public class MoneyViewModel extends AndroidViewModel {
     // Form data for adding investor
     private final MutableLiveData<String> investorNameLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isMainAccountLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Double> investmentAmountLiveData = new MutableLiveData<>();
+    
+    // Main Account balance
+    private final MutableLiveData<Double> mainAccountBalanceLiveData = new MutableLiveData<>();
     
     // Form data for loan funding
     private final MutableLiveData<Double> loanAmountLiveData = new MutableLiveData<>();
@@ -74,6 +78,8 @@ public class MoneyViewModel extends AndroidViewModel {
         // Initialize form data
         investorNameLiveData.setValue("");
         isMainAccountLiveData.setValue(false);
+        investmentAmountLiveData.setValue(0.0);
+        mainAccountBalanceLiveData.setValue(0.0);
         loanAmountLiveData.setValue(Constants.DEFAULT_LOAN_AMOUNT);
         selectedInvestorsLiveData.setValue(new java.util.ArrayList<>());
         investorAmountsLiveData.setValue(new java.util.ArrayList<>());
@@ -87,6 +93,9 @@ public class MoneyViewModel extends AndroidViewModel {
     public LiveData<List<LoanFundingEntity>> getLoanFundingLiveData() { return loanFundingLiveData; }
     public LiveData<List<InvestorEntity>> getAvailableInvestorsLiveData() { return availableInvestorsLiveData; }
     
+    // Repository access for fragment
+    public InvestorRepository getInvestorRepository() { return investorRepository; }
+    
     // UI state getters
     public LiveData<Boolean> getIsLoadingLiveData() { return isLoadingLiveData; }
     public LiveData<String> getErrorMessageLiveData() { return errorMessageLiveData; }
@@ -96,6 +105,8 @@ public class MoneyViewModel extends AndroidViewModel {
     // Form data getters
     public LiveData<String> getInvestorNameLiveData() { return investorNameLiveData; }
     public LiveData<Boolean> getIsMainAccountLiveData() { return isMainAccountLiveData; }
+    public LiveData<Double> getInvestmentAmountLiveData() { return investmentAmountLiveData; }
+    public LiveData<Double> getMainAccountBalanceLiveData() { return mainAccountBalanceLiveData; }
     public LiveData<Double> getLoanAmountLiveData() { return loanAmountLiveData; }
     public LiveData<List<InvestorEntity>> getSelectedInvestorsLiveData() { return selectedInvestorsLiveData; }
     public LiveData<List<Double>> getInvestorAmountsLiveData() { return investorAmountsLiveData; }
@@ -234,6 +245,29 @@ public class MoneyViewModel extends AndroidViewModel {
     public void updateIsMainAccount(boolean isMainAccount) {
         isMainAccountLiveData.setValue(isMainAccount);
     }
+    
+    /**
+     * Update investment amount
+     */
+    public void updateInvestmentAmount(double amount) {
+        investmentAmountLiveData.setValue(amount);
+    }
+    
+    /**
+     * Update main account balance
+     */
+    public void updateMainAccountBalance(double balance) {
+        mainAccountBalanceLiveData.setValue(balance);
+        successMessageLiveData.postValue("Main account balance updated to " + UiUtils.formatCurrency(balance));
+    }
+    
+    /**
+     * Get current year-month string
+     */
+    private String getCurrentYearMonth() {
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM", java.util.Locale.getDefault());
+        return sdf.format(new java.util.Date());
+    }
 
     /**
      * Save investor
@@ -241,57 +275,68 @@ public class MoneyViewModel extends AndroidViewModel {
     public void saveInvestor() {
         String name = investorNameLiveData.getValue();
         Boolean isMainAccount = isMainAccountLiveData.getValue();
+        Double investmentAmount = investmentAmountLiveData.getValue();
         
         if (name == null || name.trim().isEmpty()) {
             errorMessageLiveData.setValue("Investor name is required");
             return;
         }
         
+        if (investmentAmount == null || investmentAmount <= 0) {
+            errorMessageLiveData.setValue("Investment amount must be greater than 0");
+            return;
+        }
+        
         isLoadingLiveData.setValue(true);
         errorMessageLiveData.setValue(null);
         
-        try {
-            // Create investor entity
-            InvestorEntity investor = new InvestorEntity();
-            investor.setUuid(UuidUtil.generateInvestorUuid());
-            investor.setName(name.trim());
-            investor.setMainAccount(isMainAccount != null && isMainAccount);
-            investor.setCreatedDate(System.currentTimeMillis());
-            investor.setLastModified(System.currentTimeMillis());
-            investor.setSyncStatus(com.moithuti.funds.sync.SyncStatus.PENDING.name());
-            investor.setDeleted(false);
-            
-            // Validate investor
-            if (!investorRepository.validateInvestor(investor)) {
-                errorMessageLiveData.setValue("Invalid investor data");
-                isLoadingLiveData.setValue(false);
-                return;
+        new Thread(() -> {
+            try {
+                // Create investor entity
+                InvestorEntity investor = new InvestorEntity();
+                investor.setUuid(UuidUtil.generateInvestorUuid());
+                investor.setName(name.trim());
+                investor.setMainAccount(isMainAccount != null && isMainAccount);
+                investor.setCreatedDate(System.currentTimeMillis());
+                investor.setLastModified(System.currentTimeMillis());
+                investor.setSyncStatus(com.moithuti.funds.sync.SyncStatus.PENDING.name());
+                investor.setDeleted(false);
+                
+                // Validate investor
+                if (!investorRepository.validateInvestor(investor)) {
+                    errorMessageLiveData.postValue("Invalid investor data");
+                    isLoadingLiveData.postValue(false);
+                    return;
+                }
+                
+                // Insert investor using repository method
+                String investorId = investorRepository.createInvestor(name.trim(), investmentAmount, 0.0);
+                
+                if (investorId != null) {
+                    successMessageLiveData.postValue("Investor added successfully with investment of " + UiUtils.formatCurrency(investmentAmount));
+                    
+                    // Reset form
+                    investorNameLiveData.postValue("");
+                    investmentAmountLiveData.postValue(0.0);
+                    isMainAccountLiveData.postValue(false);
+                } else {
+                    errorMessageLiveData.postValue("Failed to create investor");
+                }
+                
+                isLoadingLiveData.postValue(false);
+                
+            } catch (Exception e) {
+                errorMessageLiveData.postValue("Failed to save investor: " + e.getMessage());
+                isLoadingLiveData.postValue(false);
             }
-            
-            // Save investor
-            String investorId = investorRepository.createInvestor(
-                investor.getName(), 
-                0.0, // Default initial investment
-                0.0  // Default monthly top-up
-            );
-            
-            if (investorId != null) {
-                successMessageLiveData.setValue("Investor saved successfully");
-            } else {
-                errorMessageLiveData.setValue("Failed to create investor");
-            }
-            isLoadingLiveData.setValue(false);
-            
-            // Clear form
-            clearInvestorForm();
-            
-            // Refresh data
-            loadInvestorData();
-            
-        } catch (Exception e) {
-            errorMessageLiveData.setValue("Error saving investor: " + e.getMessage());
-            isLoadingLiveData.setValue(false);
-        }
+        }).start();
+    }
+    
+    /**
+     * Initialize the ViewModel
+     */
+    public void initialize() {
+        loadInvestorData();
     }
 
     /**
@@ -557,13 +602,6 @@ public class MoneyViewModel extends AndroidViewModel {
      */
     public void clearSuccessMessage() {
         successMessageLiveData.setValue(null);
-    }
-
-    /**
-     * Initialize the ViewModel
-     */
-    public void initialize() {
-        loadInvestorData();
     }
 
     @Override

@@ -62,6 +62,7 @@ id client_phone
 id client_status
 id clients_recycler_view
 id cumulative_profit
+id edit_main_account_button
 id empty_state_text
 id error_message
 id error_message_text
@@ -74,6 +75,8 @@ id funding_investor_name_text
 id funding_investors_recycler_view
 id interest_earned
 id invested_amount
+id investor_amount_edit_text
+id investor_amount_layout
 id investor_name
 id investor_name_edit_text
 id investor_name_layout
@@ -86,6 +89,9 @@ id loan_amount_edit_text
 id loan_amount_layout
 id loan_content
 id loaned_out_amount
+id main_account_balance_edit_text
+id main_account_balance_layout
+id main_account_balance_text
 id money_tabs
 id monthly_bar_chart
 id monthly_profit
@@ -100,6 +106,7 @@ id nav_money
 id repaid_amount
 id save_client
 id save_investor_button
+id save_main_account_button
 id search_clients
 id status_indicator
 id status_pie_chart

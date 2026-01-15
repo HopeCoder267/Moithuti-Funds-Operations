@@ -25,7 +25,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moithuti.funds.R;
 import com.moithuti.funds.data.local.entity.InvestorEntity;
+import com.moithuti.funds.data.local.entity.InvestorTransactionEntity;
 import com.moithuti.funds.ui.common.UiUtils;
+import com.moithuti.funds.util.Constants;
 
 import java.util.List;
 
@@ -43,11 +45,20 @@ public class MoneyFragment extends Fragment {
     private TextView errorMessageText;
     private TextView successMessageText;
     
+    // Main Account components
+    private TextView mainAccountBalanceText;
+    private TextInputLayout mainAccountBalanceLayout;
+    private TextInputEditText mainAccountBalanceEditText;
+    private Button editMainAccountButton;
+    private Button saveMainAccountButton;
+    
     // Investors tab components
     private RecyclerView investorsRecyclerView;
     private Button addInvestorButton;
     private TextInputEditText investorNameEditText;
     private TextInputLayout investorNameLayout;
+    private TextInputEditText investorAmountEditText;
+    private TextInputLayout investorAmountLayout;
     private Button saveInvestorButton;
     
     // Loan funding tab components
@@ -93,11 +104,20 @@ public class MoneyFragment extends Fragment {
         errorMessageText = view.findViewById(R.id.error_message_text);
         successMessageText = view.findViewById(R.id.success_message_text);
         
+        // Main Account components
+        mainAccountBalanceText = view.findViewById(R.id.main_account_balance_text);
+        mainAccountBalanceLayout = view.findViewById(R.id.main_account_balance_layout);
+        mainAccountBalanceEditText = view.findViewById(R.id.main_account_balance_edit_text);
+        editMainAccountButton = view.findViewById(R.id.edit_main_account_button);
+        saveMainAccountButton = view.findViewById(R.id.save_main_account_button);
+        
         // Investors tab
         investorsRecyclerView = view.findViewById(R.id.investors_recycler_view);
         addInvestorButton = view.findViewById(R.id.add_investor_button);
         investorNameEditText = view.findViewById(R.id.investor_name_edit_text);
         investorNameLayout = view.findViewById(R.id.investor_name_layout);
+        investorAmountEditText = view.findViewById(R.id.investor_amount_edit_text);
+        investorAmountLayout = view.findViewById(R.id.investor_amount_layout);
         saveInvestorButton = view.findViewById(R.id.save_investor_button);
         
         // Loan funding tab
@@ -130,10 +150,47 @@ public class MoneyFragment extends Fragment {
     }
 
     private void setupClickListeners() {
+        // Main Account Edit button
+        editMainAccountButton.setOnClickListener(v -> {
+            // Show edit form
+            mainAccountBalanceLayout.setVisibility(View.VISIBLE);
+            saveMainAccountButton.setVisibility(View.VISIBLE);
+            editMainAccountButton.setVisibility(View.GONE);
+            
+            // Pre-fill current balance
+            String currentBalance = mainAccountBalanceText.getText().toString();
+            if (!currentBalance.equals("P0.00")) {
+                mainAccountBalanceEditText.setText(currentBalance.replace("P", ""));
+            }
+        });
+        
+        // Main Account Save button
+        saveMainAccountButton.setOnClickListener(v -> {
+            String balanceStr = mainAccountBalanceEditText.getText().toString().trim();
+            if (balanceStr.isEmpty()) {
+                mainAccountBalanceLayout.setError("Balance is required");
+                return;
+            }
+            
+            try {
+                double balance = Double.parseDouble(balanceStr);
+                if (balance < 0) {
+                    mainAccountBalanceLayout.setError("Balance cannot be negative");
+                    return;
+                }
+                
+                viewModel.updateMainAccountBalance(balance);
+                hideMainAccountEditForm();
+            } catch (NumberFormatException e) {
+                mainAccountBalanceLayout.setError("Invalid balance amount");
+            }
+        });
+        
         // Add investor button
         addInvestorButton.setOnClickListener(v -> {
             // Show investor form
             investorNameLayout.setVisibility(View.VISIBLE);
+            investorAmountLayout.setVisibility(View.VISIBLE);
             saveInvestorButton.setVisibility(View.VISIBLE);
             addInvestorButton.setVisibility(View.GONE);
         });
@@ -141,14 +198,32 @@ public class MoneyFragment extends Fragment {
         // Save investor button
         saveInvestorButton.setOnClickListener(v -> {
             String name = investorNameEditText.getText().toString().trim();
+            String amountStr = investorAmountEditText.getText().toString().trim();
+            
             if (name.isEmpty()) {
                 investorNameLayout.setError("Investor name is required");
                 return;
             }
             
-            viewModel.updateInvestorName(name);
-            viewModel.updateIsMainAccount(false); // Default to not main account
-            viewModel.saveInvestor();
+            if (amountStr.isEmpty()) {
+                investorAmountLayout.setError("Investment amount is required");
+                return;
+            }
+            
+            try {
+                double amount = Double.parseDouble(amountStr);
+                if (amount <= 0) {
+                    investorAmountLayout.setError("Amount must be greater than 0");
+                    return;
+                }
+                
+                viewModel.updateInvestorName(name);
+                viewModel.updateInvestmentAmount(amount);
+                viewModel.updateIsMainAccount(false); // Default to not main account
+                viewModel.saveInvestor();
+            } catch (NumberFormatException e) {
+                investorAmountLayout.setError("Invalid amount");
+            }
         });
         
         // Issue loan button
@@ -218,6 +293,21 @@ public class MoneyFragment extends Fragment {
     }
 
     private void setupObservers() {
+        // Main Account balance observer
+        viewModel.getMainAccountBalanceLiveData().observe(getViewLifecycleOwner(), balance -> {
+            if (balance != null && mainAccountBalanceText != null) {
+                mainAccountBalanceText.setText(UiUtils.formatCurrency(balance));
+            }
+        });
+        
+        // Main Account observer for initial balance
+        viewModel.getMainAccountLiveData().observe(getViewLifecycleOwner(), mainAccount -> {
+            if (mainAccount != null) {
+                // For now, just show default balance - will be updated when user sets it
+                viewModel.updateMainAccountBalance(0.0);
+            }
+        });
+        
         // Loading observer
         viewModel.getIsLoadingLiveData().observe(getViewLifecycleOwner(), isLoading -> {
             loadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
@@ -240,6 +330,10 @@ public class MoneyFragment extends Fragment {
                 successMessageText.setText(successMessage);
                 successMessageText.setVisibility(View.VISIBLE);
                 errorMessageText.setVisibility(View.GONE);
+                
+                // Hide forms on success
+                hideMainAccountEditForm();
+                hideInvestorForm();
                 
                 // Hide success message after 3 seconds
                 successMessageText.postDelayed(() -> {
@@ -436,5 +530,24 @@ public class MoneyFragment extends Fragment {
                 });
             }
         }
+    }
+    
+    private void hideMainAccountEditForm() {
+        mainAccountBalanceLayout.setVisibility(View.GONE);
+        saveMainAccountButton.setVisibility(View.GONE);
+        editMainAccountButton.setVisibility(View.VISIBLE);
+        mainAccountBalanceEditText.setText("");
+        mainAccountBalanceLayout.setError(null);
+    }
+    
+    private void hideInvestorForm() {
+        investorNameLayout.setVisibility(View.GONE);
+        investorAmountLayout.setVisibility(View.GONE);
+        saveInvestorButton.setVisibility(View.GONE);
+        addInvestorButton.setVisibility(View.VISIBLE);
+        investorNameEditText.setText("");
+        investorAmountEditText.setText("");
+        investorNameLayout.setError(null);
+        investorAmountLayout.setError(null);
     }
 }

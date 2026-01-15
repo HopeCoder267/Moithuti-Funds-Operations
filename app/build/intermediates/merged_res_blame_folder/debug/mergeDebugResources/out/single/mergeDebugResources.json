@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_card_background.xml.flat",
-        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/card_background.xml"
-    },
-    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/navigation_nav_graph.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_card_background.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/card_background.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_fragment_money.xml.flat",
@@ -68,10 +68,6 @@
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/status_partial.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/layout_fragment_home.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/layout/fragment_home.xml"
-    },
-    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_fragment_add_client.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_add_client.xml"
     },
@@ -106,6 +102,10 @@
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_ic_account_balance.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/ic_account_balance.xml"
+    },
+    {
+        "merged": "com.moithuti.funds.app-debug-55:/layout_fragment_money.xml.flat",
+        "source": "com.moithuti.funds.app-main-57:/layout/fragment_money.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-hdpi_ic_launcher_round.xml.flat",

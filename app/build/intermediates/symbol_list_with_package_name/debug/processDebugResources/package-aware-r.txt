@@ -3330,6 +3330,7 @@ id easeInOut
 id easeOut
 id east
 id edge
+id edit_main_account_button
 id edit_query
 id edit_text_id
 id elastic
@@ -3395,6 +3396,8 @@ id indeterminate
 id info
 id interest_earned
 id invested_amount
+id investor_amount_edit_text
+id investor_amount_layout
 id investor_name
 id investor_name_edit_text
 id investor_name_layout
@@ -3426,6 +3429,9 @@ id loaned_out_amount
 id locale
 id ltr
 id m3_side_sheet
+id main_account_balance_edit_text
+id main_account_balance_layout
+id main_account_balance_text
 id marquee
 id masked
 id match_constraint
@@ -3568,6 +3574,7 @@ id row_index_key
 id rtl
 id save_client
 id save_investor_button
+id save_main_account_button
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
