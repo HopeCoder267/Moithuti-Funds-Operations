@@ -332,9 +332,21 @@ public class ClientRepository {
         
         // Check phone (optional but if provided, must be valid)
         if (client.getPhone() != null && !client.getPhone().trim().isEmpty()) {
-            if (client.getPhone().length() < Constants.MIN_PHONE_LENGTH || 
-                client.getPhone().length() > Constants.MAX_PHONE_LENGTH) {
-                Log.w(TAG, "Client validation failed: phone number invalid length");
+            String phone = client.getPhone().trim();
+            
+            // Remove common formatting characters for validation
+            String cleanPhone = phone.replaceAll("[^0-9]", "");
+            
+            // More flexible phone validation for Botswana numbers
+            if (cleanPhone.length() < Constants.MIN_PHONE_LENGTH || 
+                cleanPhone.length() > Constants.MAX_PHONE_LENGTH) {
+                Log.w(TAG, "Client validation failed: phone number invalid length: " + cleanPhone.length());
+                return false;
+            }
+            
+            // Basic format check - allow common formats
+            if (!phone.matches("^[+]?[0-9][0-9\\-\\s]{5,15}$")) {
+                Log.w(TAG, "Client validation failed: phone number invalid format: " + phone);
                 return false;
             }
         }

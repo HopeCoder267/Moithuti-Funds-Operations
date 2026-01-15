@@ -54,10 +54,10 @@ public class Constants {
 
     // Validation
     public static final int MAX_CLIENT_NAME_LENGTH = 100;
-    public static final int MAX_PHONE_LENGTH = 20;
+    public static final int MAX_PHONE_LENGTH = 15; // Botswana numbers are shorter
     public static final int MAX_NOTES_LENGTH = 1000;
     public static final int MAX_INVESTOR_NAME_LENGTH = 100;
-    public static final int MIN_PHONE_LENGTH = 10;
+    public static final int MIN_PHONE_LENGTH = 7; // More flexible minimum
 
     // Date Formats
     public static final String DATE_FORMAT_DISPLAY = "dd MMM yyyy";
@@ -67,8 +67,8 @@ public class Constants {
     public static final String DATE_FORMAT_DATETIME = "dd MMM yyyy HH:mm";
 
     // Currency
-    public static final String CURRENCY_SYMBOL = "R";
-    public static final String CURRENCY_CODE = "ZAR";
+    public static final String CURRENCY_SYMBOL = "P";
+    public static final String CURRENCY_CODE = "BWP";
     public static final int CURRENCY_DECIMAL_PLACES = 2;
 
     // Google Sheets

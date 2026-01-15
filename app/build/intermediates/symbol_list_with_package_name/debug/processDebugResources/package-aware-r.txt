@@ -3237,6 +3237,7 @@ id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
 id available_amount
+id available_funds
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -3290,6 +3291,7 @@ id coordinator
 id cos
 id counterclockwise
 id cradle
+id cumulative_profit
 id currentState
 id custom
 id customPanel
@@ -3391,6 +3393,7 @@ id immediateStop
 id included
 id indeterminate
 id info
+id interest_earned
 id invested_amount
 id investor_name
 id investor_name_edit_text
@@ -3459,6 +3462,7 @@ id month_navigation_next
 id month_navigation_previous
 id month_title
 id monthly_bar_chart
+id monthly_profit
 id motion_base
 id mtrl_anchor_parent
 id mtrl_calendar_day_selector_frame

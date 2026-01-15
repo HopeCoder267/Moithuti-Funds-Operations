@@ -53,6 +53,7 @@ drawable status_paid
 drawable status_partial
 id add_investor_button
 id available_amount
+id available_funds
 id bottom_navigation
 id client_count
 id client_name
@@ -60,6 +61,7 @@ id client_notes
 id client_phone
 id client_status
 id clients_recycler_view
+id cumulative_profit
 id empty_state_text
 id error_message
 id error_message_text
@@ -70,6 +72,7 @@ id funding_investor_balance_text
 id funding_investor_card
 id funding_investor_name_text
 id funding_investors_recycler_view
+id interest_earned
 id invested_amount
 id investor_name
 id investor_name_edit_text
@@ -85,6 +88,7 @@ id loan_content
 id loaned_out_amount
 id money_tabs
 id monthly_bar_chart
+id monthly_profit
 id nav_add_client
 id nav_client_profile
 id nav_clients

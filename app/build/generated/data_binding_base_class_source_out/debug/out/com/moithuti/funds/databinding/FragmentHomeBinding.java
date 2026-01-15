@@ -25,10 +25,19 @@ public final class FragmentHomeBinding implements ViewBinding {
   private final NestedScrollView rootView;
 
   @NonNull
+  public final TextView availableFunds;
+
+  @NonNull
+  public final TextView cumulativeProfit;
+
+  @NonNull
   public final TextView errorMessage;
 
   @NonNull
   public final Button forceSync;
+
+  @NonNull
+  public final TextView interestEarned;
 
   @NonNull
   public final RecyclerView investorSummaryRecyclerView;
@@ -38,6 +47,9 @@ public final class FragmentHomeBinding implements ViewBinding {
 
   @NonNull
   public final BarChart monthlyBarChart;
+
+  @NonNull
+  public final TextView monthlyProfit;
 
   @NonNull
   public final PieChart statusPieChart;
@@ -57,18 +69,24 @@ public final class FragmentHomeBinding implements ViewBinding {
   @NonNull
   public final TextView totalRepaid;
 
-  private FragmentHomeBinding(@NonNull NestedScrollView rootView, @NonNull TextView errorMessage,
-      @NonNull Button forceSync, @NonNull RecyclerView investorSummaryRecyclerView,
+  private FragmentHomeBinding(@NonNull NestedScrollView rootView, @NonNull TextView availableFunds,
+      @NonNull TextView cumulativeProfit, @NonNull TextView errorMessage, @NonNull Button forceSync,
+      @NonNull TextView interestEarned, @NonNull RecyclerView investorSummaryRecyclerView,
       @NonNull ProgressBar loadingIndicator, @NonNull BarChart monthlyBarChart,
-      @NonNull PieChart statusPieChart, @NonNull TextView syncStatus,
-      @NonNull TextView totalAvailable, @NonNull TextView totalInvested,
-      @NonNull TextView totalLoaned, @NonNull TextView totalRepaid) {
+      @NonNull TextView monthlyProfit, @NonNull PieChart statusPieChart,
+      @NonNull TextView syncStatus, @NonNull TextView totalAvailable,
+      @NonNull TextView totalInvested, @NonNull TextView totalLoaned,
+      @NonNull TextView totalRepaid) {
     this.rootView = rootView;
+    this.availableFunds = availableFunds;
+    this.cumulativeProfit = cumulativeProfit;
     this.errorMessage = errorMessage;
     this.forceSync = forceSync;
+    this.interestEarned = interestEarned;
     this.investorSummaryRecyclerView = investorSummaryRecyclerView;
     this.loadingIndicator = loadingIndicator;
     this.monthlyBarChart = monthlyBarChart;
+    this.monthlyProfit = monthlyProfit;
     this.statusPieChart = statusPieChart;
     this.syncStatus = syncStatus;
     this.totalAvailable = totalAvailable;
@@ -104,6 +122,18 @@ public final class FragmentHomeBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.available_funds;
+      TextView availableFunds = ViewBindings.findChildViewById(rootView, id);
+      if (availableFunds == null) {
+        break missingId;
+      }
+
+      id = R.id.cumulative_profit;
+      TextView cumulativeProfit = ViewBindings.findChildViewById(rootView, id);
+      if (cumulativeProfit == null) {
+        break missingId;
+      }
+
       id = R.id.error_message;
       TextView errorMessage = ViewBindings.findChildViewById(rootView, id);
       if (errorMessage == null) {
@@ -113,6 +143,12 @@ public final class FragmentHomeBinding implements ViewBinding {
       id = R.id.force_sync;
       Button forceSync = ViewBindings.findChildViewById(rootView, id);
       if (forceSync == null) {
+        break missingId;
+      }
+
+      id = R.id.interest_earned;
+      TextView interestEarned = ViewBindings.findChildViewById(rootView, id);
+      if (interestEarned == null) {
         break missingId;
       }
 
@@ -131,6 +167,12 @@ public final class FragmentHomeBinding implements ViewBinding {
       id = R.id.monthly_bar_chart;
       BarChart monthlyBarChart = ViewBindings.findChildViewById(rootView, id);
       if (monthlyBarChart == null) {
+        break missingId;
+      }
+
+      id = R.id.monthly_profit;
+      TextView monthlyProfit = ViewBindings.findChildViewById(rootView, id);
+      if (monthlyProfit == null) {
         break missingId;
       }
 
@@ -170,9 +212,10 @@ public final class FragmentHomeBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHomeBinding((NestedScrollView) rootView, errorMessage, forceSync,
-          investorSummaryRecyclerView, loadingIndicator, monthlyBarChart, statusPieChart,
-          syncStatus, totalAvailable, totalInvested, totalLoaned, totalRepaid);
+      return new FragmentHomeBinding((NestedScrollView) rootView, availableFunds, cumulativeProfit,
+          errorMessage, forceSync, interestEarned, investorSummaryRecyclerView, loadingIndicator,
+          monthlyBarChart, monthlyProfit, statusPieChart, syncStatus, totalAvailable, totalInvested,
+          totalLoaned, totalRepaid);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

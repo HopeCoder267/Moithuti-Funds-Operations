@@ -36,12 +36,10 @@ public class HomeFragment extends Fragment {
     private TextView totalAvailableText;
     
     // Profit tracking components
-    private TextView availableFundsText;
     private TextView monthlyProfitText;
     private TextView cumulativeProfitText;
     private TextView interestEarnedText;
-    private PieChart profitPieChart;
-    private BarChart monthlyProfitChart;
+    private TextView availableFundsText;
     
     private PieChart statusPieChart;
     private BarChart monthlyBarChart;
@@ -80,19 +78,23 @@ public class HomeFragment extends Fragment {
 
     private void initViews(View view) {
         syncStatusText = view.findViewById(R.id.sync_status);
+        
         totalInvestedText = view.findViewById(R.id.total_invested);
         totalLoanedText = view.findViewById(R.id.total_loaned);
         totalRepaidText = view.findViewById(R.id.total_repaid);
         totalAvailableText = view.findViewById(R.id.total_available);
         
-        // Profit tracking components will be added when layout is updated
-        // For now, using existing text views to display profit metrics
+        // Initialize profit tracking components
+        monthlyProfitText = view.findViewById(R.id.monthly_profit);
+        cumulativeProfitText = view.findViewById(R.id.cumulative_profit);
+        interestEarnedText = view.findViewById(R.id.interest_earned);
+        availableFundsText = view.findViewById(R.id.available_funds);
         
         statusPieChart = view.findViewById(R.id.status_pie_chart);
         monthlyBarChart = view.findViewById(R.id.monthly_bar_chart);
         investorSummaryRecyclerView = view.findViewById(R.id.investor_summary_recycler_view);
         loadingIndicator = view.findViewById(R.id.loading_indicator);
-        errorMessageText = view.findViewById(R.id.error_message_text);
+        errorMessageText = view.findViewById(R.id.error_message);
         
         // Setup RecyclerView
         investorSummaryAdapter = new InvestorSummaryAdapter();
@@ -130,29 +132,28 @@ public class HomeFragment extends Fragment {
             }
         });
         
-        // Profit tracking observers - using existing totalAvailableText for available funds
+        // Profit tracking observers - using dedicated TextViews
         viewModel.getAvailableFundsLiveData().observe(getViewLifecycleOwner(), availableFunds -> {
-            if (availableFunds != null && totalAvailableText != null) {
-                totalAvailableText.setText(UiUtils.formatCurrency(availableFunds));
+            if (availableFunds != null && availableFundsText != null) {
+                availableFundsText.setText(UiUtils.formatCurrency(availableFunds));
             }
         });
         
-        // For now, show profit metrics in existing text views (if layout is updated later, these can be moved)
         viewModel.getMonthlyProfitLiveData().observe(getViewLifecycleOwner(), monthlyProfit -> {
-            if (monthlyProfit != null && totalLoanedText != null) {
-                totalLoanedText.setText("Monthly Profit: " + UiUtils.formatCurrency(monthlyProfit));
+            if (monthlyProfit != null && monthlyProfitText != null) {
+                monthlyProfitText.setText(UiUtils.formatCurrency(monthlyProfit));
             }
         });
         
         viewModel.getCumulativeProfitLiveData().observe(getViewLifecycleOwner(), cumulativeProfit -> {
-            if (cumulativeProfit != null && totalRepaidText != null) {
-                totalRepaidText.setText("Cumulative Profit: " + UiUtils.formatCurrency(cumulativeProfit));
+            if (cumulativeProfit != null && cumulativeProfitText != null) {
+                cumulativeProfitText.setText(UiUtils.formatCurrency(cumulativeProfit));
             }
         });
         
         viewModel.getInterestEarnedLiveData().observe(getViewLifecycleOwner(), interestEarned -> {
-            if (interestEarned != null && totalInvestedText != null) {
-                totalInvestedText.setText("Interest Earned: " + UiUtils.formatCurrency(interestEarned));
+            if (interestEarned != null && interestEarnedText != null) {
+                interestEarnedText.setText(UiUtils.formatCurrency(interestEarned));
             }
         });
         
