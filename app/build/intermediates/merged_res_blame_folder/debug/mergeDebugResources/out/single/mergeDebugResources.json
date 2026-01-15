@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_card_background.xml.flat",
-        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/card_background.xml"
-    },
-    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/navigation_nav_graph.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_card_background.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/card_background.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_fragment_money.xml.flat",
@@ -16,64 +16,44 @@
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/ic_add.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/xml_data_extraction_rules.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/xml/data_extraction_rules.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-hdpi_ic_launcher_round.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-hdpi/ic_launcher_round.xml"
-    },
-    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_status_circle.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/status_circle.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-xxxhdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_ic_people.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/ic_people.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/xml_backup_rules.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/xml/backup_rules.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-xxxhdpi/ic_launcher_round.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-xxhdpi/ic_launcher.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_ic_home.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/ic_home.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-xxhdpi_ic_launcher.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-xxhdpi/ic_launcher.xml"
-    },
-    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_ic_arrow_right.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/ic_arrow_right.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-xhdpi_ic_launcher_round.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-xhdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_activity_main.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/activity_main.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-mdpi_ic_launcher.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-mdpi/ic_launcher.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-mdpi_ic_launcher_round.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-mdpi/ic_launcher_round.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-mdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_fragment_home.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_home.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-xhdpi_ic_launcher.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-xhdpi/ic_launcher.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-xhdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_activity_investor_detail.xml.flat",
@@ -84,20 +64,24 @@
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/status_partial.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-xxhdpi/ic_launcher_round.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-xxxhdpi_ic_launcher.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-xxxhdpi/ic_launcher.xml"
-    },
-    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_fragment_add_client.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_add_client.xml"
     },
     {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_status_blacklisted.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/status_blacklisted.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/xml_backup_rules.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-xxhdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_item_investor_card.xml.flat",
@@ -108,20 +92,40 @@
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/item_client_card.xml"
     },
     {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_ic_account_balance.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/ic_account_balance.xml"
+    },
+    {
+        "merged": "com.moithuti.funds.app-debug-55:/layout_fragment_money.xml.flat",
+        "source": "com.moithuti.funds.app-main-57:/layout/fragment_money.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-hdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_activity_client_profile.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/activity_client_profile.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-debug-55:/mipmap-hdpi_ic_launcher.xml.flat",
-        "source": "com.moithuti.funds.app-main-57:/mipmap-hdpi/ic_launcher.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.moithuti.funds.app-debug-55:/layout_item_funding_investor.xml.flat",
+        "source": "com.moithuti.funds.app-main-57:/layout/item_funding_investor.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/layout_fragment_clients.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_clients.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/mipmap-xxxhdpi/ic_launcher.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_status_overdue.xml.flat",
@@ -130,6 +134,10 @@
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/drawable_status_paid.xml.flat",
         "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/drawable/status_paid.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/xml_data_extraction_rules.xml.flat",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/xml/data_extraction_rules.xml"
     },
     {
         "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-debug-55:/menu_bottom_nav_menu.xml.flat",

@@ -15,6 +15,13 @@ import com.moithuti.funds.ui.common.UiUtils;
 import java.util.Map;
 
 /**
+ * Callback interface for async operations
+ */
+interface Callback<T> {
+    void onResult(T result);
+}
+
+/**
  * Home ViewModel - ViewModel for Home Fragment
  * Manages dashboard data and sync operations
  */
@@ -194,49 +201,80 @@ public class HomeViewModel extends AndroidViewModel {
      * Get quick stats
      */
     public void loadQuickStats() {
+        isLoadingLiveData.setValue(true);
+        errorMessageLiveData.setValue(null);
+        
         try {
-            Map<String, Object> quickStats = dashboardRepository.getQuickStats();
-            
-            // Convert to DashboardStats for consistency
-            DashboardStats stats = new DashboardStats();
-            if (quickStats != null) {
-                stats.setTotalClients((Integer) quickStats.get("totalClients"));
-                stats.setTotalLoans((Integer) quickStats.get("totalLoans"));
-                stats.setTotalInvested((Double) quickStats.get("totalInvested"));
-                stats.setTotalLoaned((Double) quickStats.get("totalLoaned"));
-                stats.setTotalRepaid((Double) quickStats.get("totalRepaid"));
-                stats.setOverdueLoans((Integer) quickStats.get("overdueLoans"));
-            }
-            
-            dashboardStatsLiveData.setValue(stats);
+            // Run database operations in background thread
+            new Thread(() -> {
+                try {
+                    Map<String, Object> quickStats = dashboardRepository.getQuickStats();
+                    
+                    // Post result to main thread
+                    UiUtils.runOnUiThread(() -> {
+                        try {
+                            // Convert to DashboardStats for consistency
+                            DashboardStats stats = new DashboardStats();
+                            if (quickStats != null) {
+                                stats.setTotalClients((Integer) quickStats.get("totalClients"));
+                                stats.setTotalLoans((Integer) quickStats.get("totalLoans"));
+                                stats.setTotalInvested((Double) quickStats.get("totalInvested"));
+                                stats.setTotalLoaned((Double) quickStats.get("totalLoaned"));
+                                stats.setTotalRepaid((Double) quickStats.get("totalRepaid"));
+                                stats.setOverdueLoans((Integer) quickStats.get("overdueLoans"));
+                            }
+                            
+                            dashboardStatsLiveData.setValue(stats);
+                            isLoadingLiveData.setValue(false);
+                            
+                        } catch (Exception e) {
+                            errorMessageLiveData.setValue("Error processing quick stats: " + e.getMessage());
+                            isLoadingLiveData.setValue(false);
+                        }
+                    });
+                    
+                } catch (Exception e) {
+                    UiUtils.runOnUiThread(() -> {
+                        errorMessageLiveData.setValue("Error loading quick stats: " + e.getMessage());
+                        isLoadingLiveData.setValue(false);
+                    });
+                }
+            }).start();
             
         } catch (Exception e) {
-            errorMessageLiveData.setValue("Error loading quick stats: " + e.getMessage());
+            errorMessageLiveData.setValue("Error starting quick stats load: " + e.getMessage());
+            isLoadingLiveData.setValue(false);
         }
     }
 
     /**
      * Get client status distribution
      */
-    public Map<String, Integer> getClientStatusDistribution() {
-        try {
-            return dashboardRepository.getClientStatusDistribution();
-        } catch (Exception e) {
-            errorMessageLiveData.setValue("Error getting client distribution: " + e.getMessage());
-            return null;
-        }
+    public void getClientStatusDistribution(final Callback<Map<String, Integer>> callback) {
+        new Thread(() -> {
+            try {
+                Map<String, Integer> distribution = dashboardRepository.getClientStatusDistribution();
+                UiUtils.runOnUiThread(() -> callback.onResult(distribution));
+            } catch (Exception e) {
+                errorMessageLiveData.setValue("Error getting client distribution: " + e.getMessage());
+                UiUtils.runOnUiThread(() -> callback.onResult(null));
+            }
+        }).start();
     }
 
     /**
      * Get loan status distribution
      */
-    public Map<String, Integer> getLoanStatusDistribution() {
-        try {
-            return dashboardRepository.getLoanStatusDistribution();
-        } catch (Exception e) {
-            errorMessageLiveData.setValue("Error getting loan distribution: " + e.getMessage());
-            return null;
-        }
+    public void getLoanStatusDistribution(final Callback<Map<String, Integer>> callback) {
+        new Thread(() -> {
+            try {
+                Map<String, Integer> distribution = dashboardRepository.getLoanStatusDistribution();
+                UiUtils.runOnUiThread(() -> callback.onResult(distribution));
+            } catch (Exception e) {
+                errorMessageLiveData.setValue("Error getting loan distribution: " + e.getMessage());
+                UiUtils.runOnUiThread(() -> callback.onResult(null));
+            }
+        }).start();
     }
 
     /**

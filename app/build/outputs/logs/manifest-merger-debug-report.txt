@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-57:12
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-58:12
+INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-58:12
+INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-58:12
+INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:2:1-58:12
 MERGED from [androidx.databinding:viewbinding:8.9.0] /home/hope/.gradle/caches/8.11.1/transforms/9905f94ffeb0ae4928eb9b7e62d6394e/transformed/viewbinding-8.9.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-common:2.7.5] /home/hope/.gradle/caches/8.11.1/transforms/25e47d20bc7c399460a20998c1102ea1/transformed/navigation-common-2.7.5/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.5] /home/hope/.gradle/caches/8.11.1/transforms/84fdaba07d7146d8396150eae0cf3a5a/transformed/navigation-common-ktx-2.7.5/AndroidManifest.xml:2:1-7:12
@@ -104,8 +104,8 @@ MERGED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/
 	android:name
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:11:22-78
 application
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:13:5-55:19
-INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:13:5-55:19
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:13:5-56:19
+INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:13:5-56:19
 MERGED from [com.google.android.material:material:1.10.0] /home/hope/.gradle/caches/8.11.1/transforms/4f1b517323591e9184e2c4c2fa4c5085/transformed/material-1.10.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.10.0] /home/hope/.gradle/caches/8.11.1/transforms/4f1b517323591e9184e2c4c2fa4c5085/transformed/material-1.10.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/hope/.gradle/caches/8.11.1/transforms/2b0229d022ee8d0f13c8a9c4a18d2dc0/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -130,6 +130,10 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/hope/.gradle/caches/8
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/hope/.gradle/caches/8.11.1/transforms/99132a38243d32a27cc8358b15e062c7/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 	android:extractNativeLibs
 		INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml
+	android:roundIcon
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:20:9-54
+	android:icon
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:18:9-43
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] /home/hope/.gradle/caches/8.11.1/transforms/1ba7e8ad8c1ef9f29681128fe708e093/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
@@ -138,16 +142,14 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/hope/.gradle/caches/8
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:19:9-41
 	android:fullBackupContent
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:17:9-54
-	android:roundIcon
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:20:9-54
 	tools:targetApi
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:24:9-29
-	android:icon
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:18:9-43
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:25:9-29
 	android:allowBackup
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:15:9-35
 	android:theme
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:22:9-61
+	android:enableOnBackInvokedCallback
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:24:9-51
 	android:dataExtractionRules
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:16:9-65
 	android:usesCleartextTraffic
@@ -155,47 +157,47 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/hope/.gradle/caches/8
 	android:name
 		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:14:9-41
 activity#com.moithuti.funds.ui.MainActivity
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:27:9-35:20
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:28:9-36:20
 	android:exported
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:29:13-36
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:30:13-36
 	android:theme
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:30:13-77
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:31:13-77
 	android:name
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:28:13-44
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:29:13-44
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:31:13-34:29
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:32:13-35:29
 action#android.intent.action.MAIN
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:32:17-69
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:33:17-69
 	android:name
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:32:25-66
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:33:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:33:17-77
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:34:17-77
 	android:name
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:33:27-74
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:34:27-74
 activity#com.moithuti.funds.ui.clients.ClientProfileActivity
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:38:9-41:61
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:39:9-42:61
 	android:parentActivityName
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:41:13-58
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:42:13-58
 	android:exported
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:40:13-37
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:41:13-37
 	android:name
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:39:13-61
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:40:13-61
 activity#com.moithuti.funds.ui.money.InvestorDetailActivity
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:44:9-47:61
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:45:9-48:61
 	android:parentActivityName
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:47:13-58
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:48:13-58
 	android:exported
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:46:13-37
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:47:13-37
 	android:name
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:45:13-60
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:46:13-60
 service#androidx.work.impl.foreground.SystemForegroundService
-ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:50:9-53:34
+ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:51:9-54:34
 MERGED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/transforms/df5d8dcf3968b401f4fc6301ee996aea/transformed/work-runtime-2.8.1/AndroidManifest.xml:53:9-59:35
 MERGED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/transforms/df5d8dcf3968b401f4fc6301ee996aea/transformed/work-runtime-2.8.1/AndroidManifest.xml:53:9-59:35
 	android:enabled
 		ADDED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/transforms/df5d8dcf3968b401f4fc6301ee996aea/transformed/work-runtime-2.8.1/AndroidManifest.xml:56:13-77
 	tools:node
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:53:13-31
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:54:13-31
 	android:exported
 		ADDED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/transforms/df5d8dcf3968b401f4fc6301ee996aea/transformed/work-runtime-2.8.1/AndroidManifest.xml:57:13-37
 	tools:ignore
@@ -205,9 +207,9 @@ MERGED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/
 	android:directBootAware
 		ADDED from [androidx.work:work-runtime:2.8.1] /home/hope/.gradle/caches/8.11.1/transforms/df5d8dcf3968b401f4fc6301ee996aea/transformed/work-runtime-2.8.1/AndroidManifest.xml:55:13-44
 	android:foregroundServiceType
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:52:13-53
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:53:13-53
 	android:name
-		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:51:13-81
+		ADDED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml:52:13-81
 uses-sdk
 INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/hope/Documents/Moithuti Funds Operations/app/src/main/AndroidManifest.xml

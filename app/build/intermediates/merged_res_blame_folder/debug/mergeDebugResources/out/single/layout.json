@@ -1,38 +1,46 @@
 [
     {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/activity_main.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/activity_main.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_money.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_money.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/activity_client_profile.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/activity_client_profile.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_home.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_home.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_clients.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/fragment_clients.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/item_client_card.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/item_client_card.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/activity_client_profile.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/activity_client_profile.xml"
+    },
+    {
+        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/item_funding_investor.xml",
+        "source": "com.moithuti.funds.app-main-57:/layout/item_funding_investor.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/activity_investor_detail.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/activity_investor_detail.xml"
+    },
+    {
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/activity_main.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/activity_main.xml"
     },
     {
         "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_money.xml",
         "source": "com.moithuti.funds.app-main-57:/layout/fragment_money.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/activity_investor_detail.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/activity_investor_detail.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_clients.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_clients.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_home.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/fragment_home.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_add_client.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/fragment_add_client.xml"
     },
     {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/item_investor_card.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/item_investor_card.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/fragment_add_client.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/fragment_add_client.xml"
-    },
-    {
-        "merged": "com.moithuti.funds.app-mergeDebugResources-54:/layout/item_client_card.xml",
-        "source": "com.moithuti.funds.app-main-57:/layout/item_client_card.xml"
+        "merged": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-mergeDebugResources-54:/layout/item_investor_card.xml",
+        "source": "/home/hope/.gradle/daemon/8.11.1/com.moithuti.funds.app-main-57:/layout/item_investor_card.xml"
     }
 ]

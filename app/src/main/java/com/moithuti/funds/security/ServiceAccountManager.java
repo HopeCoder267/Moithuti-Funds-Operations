@@ -57,6 +57,29 @@ public class ServiceAccountManager {
         try {
             InputStream inputStream = context.getAssets().open(SERVICE_ACCOUNT_FILE);
             
+            // Read the service account file content to validate it
+            java.util.Scanner scanner = new java.util.Scanner(inputStream, "UTF-8");
+            StringBuilder content = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                content.append(scanner.nextLine());
+            }
+            scanner.close();
+            inputStream.close();
+            
+            String serviceAccountContent = content.toString();
+            
+            // Validate that this is not a placeholder file
+            if (serviceAccountContent.contains("REPLACE_WITH_YOUR_PRIVATE_KEY") || 
+                serviceAccountContent.contains("your-project-id") ||
+                serviceAccountContent.contains("your-service-account")) {
+                Log.w(TAG, "Service account file contains placeholder values - skipping initialization");
+                credential = null;
+                sheetsService = null;
+                return;
+            }
+            
+            // Reopen the stream for GoogleCredential
+            inputStream = context.getAssets().open(SERVICE_ACCOUNT_FILE);
             NetHttpTransport httpTransport = new NetHttpTransport();
             
             credential = GoogleCredential.fromStream(inputStream, httpTransport, JSON_FACTORY)
@@ -71,6 +94,10 @@ public class ServiceAccountManager {
             
         } catch (IOException e) {
             Log.e(TAG, "Error initializing Google credentials", e);
+            credential = null;
+            sheetsService = null;
+        } catch (Exception e) {
+            Log.e(TAG, "Unexpected error initializing credentials", e);
             credential = null;
             sheetsService = null;
         }
