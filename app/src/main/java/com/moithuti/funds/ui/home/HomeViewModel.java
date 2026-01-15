@@ -78,8 +78,7 @@ public class HomeViewModel extends AndroidViewModel {
         // Setup last sync time
         createLastSyncTimeLiveData();
         
-        // Setup profit tracker observers
-        setupProfitTrackerObservers();
+        // Note: setupProfitTrackerObservers() will be called in initialize() to avoid main thread access
     }
 
     /**
@@ -481,6 +480,9 @@ public class HomeViewModel extends AndroidViewModel {
      * Initialize the ViewModel
      */
     public void initialize() {
+        // Setup profit tracker observers (moved from constructor to avoid main thread access)
+        setupProfitTrackerObservers();
+        
         // Load initial data
         loadQuickStats();
         
@@ -517,60 +519,64 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     /**
-     * Load profit metrics from repository
+     * Load profit metrics from repository (background thread)
      */
     private void loadProfitMetrics() {
-        try {
-            // Get current values directly from repository
-            double availableFunds = profitTrackerRepository.getCurrentAvailableFunds();
-            double cumulativeProfit = profitTrackerRepository.getCurrentCumulativeProfit();
-            double totalInterest = profitTrackerRepository.getTotalInterestEarned();
-            
-            // Update LiveData
-            availableFundsLiveData.setValue(availableFunds);
-            cumulativeProfitLiveData.setValue(cumulativeProfit);
-            interestEarnedLiveData.setValue(totalInterest);
-            
-            // Get monthly summaries
-            List<ProfitTrackerDao.ProfitSummary> summaries = profitTrackerRepository.getMonthlyProfitSummaries();
-            if (summaries != null) {
-                Map<String, Double> monthlyProfitMap = new HashMap<>();
-                Map<String, Double> monthlyInterestMap = new HashMap<>();
-                Map<String, Double> cumulativeProfitMap = new HashMap<>();
+        // Use background thread to avoid main thread database access
+        new Thread(() -> {
+            try {
+                // Get current values directly from repository
+                double availableFunds = profitTrackerRepository.getCurrentAvailableFunds();
+                double cumulativeProfit = profitTrackerRepository.getCurrentCumulativeProfit();
+                double totalInterest = profitTrackerRepository.getTotalInterestEarned();
                 
-                double runningCumulative = 0.0;
+                // Update LiveData on main thread
+                availableFundsLiveData.postValue(availableFunds);
+                cumulativeProfitLiveData.postValue(cumulativeProfit);
+                interestEarnedLiveData.postValue(totalInterest);
                 
-                for (ProfitTrackerDao.ProfitSummary summary : summaries) {
-                    monthlyProfitMap.put(summary.yearMonth, summary.monthlyProfit);
-                    monthlyInterestMap.put(summary.yearMonth, summary.monthlyInterest);
+                // Get monthly summaries
+                List<ProfitTrackerDao.ProfitSummary> summaries = profitTrackerRepository.getMonthlyProfitSummaries();
+                if (summaries != null) {
+                    Map<String, Double> monthlyProfitMap = new HashMap<>();
+                    Map<String, Double> monthlyInterestMap = new HashMap<>();
+                    Map<String, Double> cumulativeProfitMap = new HashMap<>();
                     
-                    runningCumulative += summary.monthlyProfit;
-                    cumulativeProfitMap.put(summary.yearMonth, runningCumulative);
+                    double runningCumulative = 0.0;
+                    
+                    for (ProfitTrackerDao.ProfitSummary summary : summaries) {
+                        monthlyProfitMap.put(summary.yearMonth, summary.monthlyProfit);
+                        monthlyInterestMap.put(summary.yearMonth, summary.monthlyInterest);
+                        
+                        runningCumulative += summary.monthlyProfit;
+                        cumulativeProfitMap.put(summary.yearMonth, runningCumulative);
+                    }
+                    
+                    // Update LiveData on main thread
+                    monthlyProfitMapLiveData.postValue(monthlyProfitMap);
+                    monthlyInterestMapLiveData.postValue(monthlyInterestMap);
+                    cumulativeProfitMapLiveData.postValue(cumulativeProfitMap);
+                    
+                    // Set current month profit
+                    String currentMonth = getCurrentYearMonth();
+                    if (monthlyProfitMap.containsKey(currentMonth)) {
+                        monthlyProfitLiveData.postValue(monthlyProfitMap.get(currentMonth));
+                    } else {
+                        monthlyProfitLiveData.postValue(0.0);
+                    }
                 }
                 
-                monthlyProfitMapLiveData.setValue(monthlyProfitMap);
-                monthlyInterestMapLiveData.setValue(monthlyInterestMap);
-                cumulativeProfitMapLiveData.setValue(cumulativeProfitMap);
-                
-                // Set current month profit
-                String currentMonth = getCurrentYearMonth();
-                if (monthlyProfitMap.containsKey(currentMonth)) {
-                    monthlyProfitLiveData.setValue(monthlyProfitMap.get(currentMonth));
-                } else {
-                    monthlyProfitLiveData.setValue(0.0);
-                }
+            } catch (Exception e) {
+                // Set default values on error
+                availableFundsLiveData.postValue(0.0);
+                monthlyProfitLiveData.postValue(0.0);
+                cumulativeProfitLiveData.postValue(0.0);
+                interestEarnedLiveData.postValue(0.0);
+                monthlyProfitMapLiveData.postValue(new HashMap<>());
+                cumulativeProfitMapLiveData.postValue(new HashMap<>());
+                monthlyInterestMapLiveData.postValue(new HashMap<>());
             }
-            
-        } catch (Exception e) {
-            // Set default values on error
-            availableFundsLiveData.setValue(0.0);
-            monthlyProfitLiveData.setValue(0.0);
-            cumulativeProfitLiveData.setValue(0.0);
-            interestEarnedLiveData.setValue(0.0);
-            monthlyProfitMapLiveData.setValue(new HashMap<>());
-            cumulativeProfitMapLiveData.setValue(new HashMap<>());
-            monthlyInterestMapLiveData.setValue(new HashMap<>());
-        }
+        }).start();
     }
 
     /**

@@ -158,17 +158,23 @@ public class HomeFragment extends Fragment {
         
         // Loading state observer
         viewModel.getIsLoadingLiveData().observe(getViewLifecycleOwner(), isLoading -> {
-            loadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            if (loadingIndicator != null) {
+                loadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            }
         });
         
         // Error message observer
         viewModel.getErrorMessageLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null && !errorMessage.trim().isEmpty()) {
-                errorMessageText.setText(errorMessage);
-                errorMessageText.setVisibility(View.VISIBLE);
+                if (errorMessageText != null) {
+                    errorMessageText.setText(errorMessage);
+                    errorMessageText.setVisibility(View.VISIBLE);
+                }
                 UiUtils.showSnackbar(getView(), errorMessage);
             } else {
-                errorMessageText.setVisibility(View.GONE);
+                if (errorMessageText != null) {
+                    errorMessageText.setVisibility(View.GONE);
+                }
             }
         });
         
